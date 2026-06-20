@@ -198,7 +198,7 @@ export class Scene {
       uPixelRatio: { value: this.pixelRatio },
       uIntro: { value: 0 },
       uTint: { value: 0 },
-      uColorLow: { value: new THREE.Color(0x2a1a14) },
+      uColorLow: { value: new THREE.Color(0x16294d) },
       uColorHigh: { value: new THREE.Color(0xff7a44) },
     };
 

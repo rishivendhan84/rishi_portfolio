@@ -6,12 +6,11 @@
   --ink-dim: #9b948a;
   --ink-faint: #5f594f;
   --accent: #ff6a3d;
-  --accent-2: #ffb070;
+  --accent-2: #5b9dff;
   --line: rgba(244, 241, 234, 0.1);
   --line-soft: rgba(244, 241, 234, 0.06);
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
-  --font-serif: 'Instrument Serif', Georgia, serif;
   --pad: clamp(1.25rem, 4.5vw, 5rem);
   --maxw: 88rem;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -130,7 +129,7 @@ em {
   pointer-events: none;
   background:
     radial-gradient(120% 80% at 50% -10%, rgba(255, 106, 61, 0.07), transparent 55%),
-    radial-gradient(100% 60% at 100% 110%, rgba(255, 176, 112, 0.05), transparent 50%);
+    radial-gradient(100% 60% at 100% 110%, rgba(91, 157, 255, 0.07), transparent 50%);
 }
 
 .noise {
@@ -488,7 +487,7 @@ main {
 }
 .btn--primary:hover {
   transform: translateY(-2px);
-  background: var(--accent-2);
+  background: #ff855e;
 }
 .btn--ghost {
   border-color: var(--line);
@@ -553,13 +552,8 @@ main {
   display: inline-block;
   will-change: transform;
 }
-.hero__serif {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-style: italic;
-  text-transform: lowercase;
-  letter-spacing: -0.01em;
-  color: var(--accent);
+.hero__accent {
+  color: var(--accent-2);
 }
 
 .hero__bottom {
@@ -676,9 +670,6 @@ main {
   letter-spacing: -0.02em;
 }
 .about__lead em {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
   color: var(--accent);
 }
 .about__body {
