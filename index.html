@@ -1,328 +1,580 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rishi Vendhan K K — GenAI Architect &amp; Full Stack Developer</title>
+    <title>Rishi Vendhan K K — Full Stack Engineer · GenAI / RAG</title>
     <meta
       name="description"
-      content="Rishi Vendhan K K — GenAI Architect & Full Stack Developer based in Chennai. I build AI agents, RAG-powered chatbots and workflow automations that replace repetitive work."
+      content="Rishi Vendhan K K — Full Stack Engineer in Chennai with ~4.5 years shipping production web apps and AI systems end-to-end. React.js, Node.js, Python, RAG, multi-agent workflows."
     />
     <meta name="author" content="Rishi Vendhan K K" />
-    <meta name="theme-color" content="#06060a" />
+    <meta name="theme-color" content="#0a0908" />
+    <link rel="canonical" href="https://rishi-portfolio-orcin.vercel.app/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Rishi Vendhan K K — GenAI Architect & Full Stack Developer" />
+    <meta property="og:url" content="https://rishi-portfolio-orcin.vercel.app/" />
+    <meta property="og:title" content="Rishi Vendhan K K — Full Stack Engineer · GenAI / RAG" />
     <meta
       property="og:description"
-      content="I build autonomous products that work on behalf of people — AI agents, RAG chatbots and workflow automations."
+      content="~4.5 years shipping production web apps and AI systems end-to-end — React.js, Node.js, Python, RAG and multi-agent workflows."
     />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="/og.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rishi Vendhan K K — Full Stack Engineer · GenAI / RAG" />
+    <meta
+      name="twitter:description"
+      content="~4.5 years shipping production web apps and AI systems end-to-end."
+    />
+    <meta name="twitter:image" content="/og.svg" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap"
       rel="stylesheet"
     />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Rishi Vendhan K K",
+        "jobTitle": "Full Stack Engineer",
+        "email": "rishivendhan.tech@gmail.com",
+        "telephone": "+91-82486-47689",
+        "url": "https://rishi-portfolio-orcin.vercel.app/",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Chennai",
+          "addressRegion": "Tamil Nadu",
+          "addressCountry": "India"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/rishivendhan",
+          "https://github.com/rishivendhan84"
+        ],
+        "knowsAbout": [
+          "React.js", "Node.js", "Python", "PostgreSQL", "MongoDB",
+          "RAG", "LangChain", "LangGraph", "Multi-agent systems", "Knowledge Graphs"
+        ]
+      }
+    </script>
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <!-- Preloader -->
-    <div class="preloader" id="preloader">
-      <div class="preloader__inner">
-        <span class="preloader__count" id="preloader-count">0</span>
-        <span class="preloader__label">RV — loading experience</span>
+    <div class="preloader" id="preloader" aria-hidden="true">
+      <div class="preloader__row">
+        <span class="preloader__name">Rishi Vendhan K&nbsp;K</span>
+        <span class="preloader__count"><span id="preloader-count">0</span><i>%</i></span>
       </div>
+      <div class="preloader__bar"><span id="preloader-fill"></span></div>
     </div>
 
     <!-- Custom cursor -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__label" id="cursor-label"></span></div>
+    <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
 
     <!-- WebGL background -->
-    <canvas id="webgl"></canvas>
-
+    <canvas id="webgl" aria-hidden="true"></canvas>
+    <div class="bg-grade" aria-hidden="true"></div>
     <div class="noise" aria-hidden="true"></div>
 
     <!-- Header -->
     <header class="header" id="header">
-      <a href="#hero" class="header__logo" data-hover>RV<span class="accent">.</span></a>
-      <nav class="header__nav">
-        <a href="#work" class="header__link" data-hover>Work</a>
-        <a href="#about" class="header__link" data-hover>About</a>
-        <a href="#experience" class="header__link" data-hover>Experience</a>
-        <a href="#contact" class="header__link" data-hover>Contact</a>
-      </nav>
-      <a href="mailto:rishivendhan.tech@gmail.com" class="header__cta" data-hover>
-        Let's talk
+      <a href="#hero" class="header__logo" data-hover>
+        <span class="header__logo-mark">RV</span>
+        <span class="header__logo-status"><i></i>Open to work</span>
       </a>
+      <nav class="header__nav" aria-label="Primary">
+        <a href="#about" class="header__link" data-hover><span>About</span></a>
+        <a href="#work" class="header__link" data-hover><span>Work</span></a>
+        <a href="#stack" class="header__link" data-hover><span>Stack</span></a>
+        <a href="#experience" class="header__link" data-hover><span>Experience</span></a>
+        <a href="#contact" class="header__link" data-hover><span>Contact</span></a>
+      </nav>
+      <a href="/Rishi_Vendhan_Resume.docx" download class="header__cta" data-hover>
+        Résumé <span class="header__cta-arrow">↓</span>
+      </a>
+      <button class="header__menu" id="menu-btn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
     </header>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <nav class="mobile-menu__nav" aria-label="Mobile">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#stack">Stack</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="mobile-menu__foot">
+        <a href="/Rishi_Vendhan_Resume.docx" download>Download résumé ↓</a>
+        <a href="mailto:rishivendhan.tech@gmail.com">rishivendhan.tech@gmail.com</a>
+      </div>
+    </div>
 
     <main id="main">
       <!-- ============ HERO ============ -->
       <section class="hero" id="hero">
-        <div class="hero__meta">
-          <span class="hero__meta-item" data-fade>Chennai, India</span>
-          <span class="hero__meta-item" data-fade>GenAI Architect</span>
-          <span class="hero__meta-item" data-fade>Available for collaborations</span>
+        <div class="hero__top">
+          <span class="hero__eyebrow" data-fade>
+            <i class="hero__dot"></i> Full&nbsp;Stack Engineer &nbsp;·&nbsp; GenAI / RAG
+          </span>
+          <span class="hero__loc" data-fade>Chennai, India &nbsp;·&nbsp; UTC+5:30</span>
         </div>
 
         <h1 class="hero__title">
           <span class="hero__line"><span class="hero__line-inner">RISHI</span></span>
-          <span class="hero__line hero__line--offset"
-            ><span class="hero__line-inner">VENDHAN<span class="accent">.</span></span></span
-          >
+          <span class="hero__line"><span class="hero__line-inner">VENDHAN <span class="hero__serif">k&nbsp;k</span></span></span>
         </h1>
 
         <div class="hero__bottom">
           <p class="hero__tagline" data-fade>
-            I build autonomous products that work on behalf of people —
-            <em>AI agents</em>, <em>RAG-powered chatbots</em> and
-            <em>workflow automations</em> that replace repetitive work, so teams
-            focus on leverage, not toil.
+            I build <em>production web apps</em> and <em>AI systems</em> end-to-end —
+            from architecture and APIs to deployment. ~4.5 years turning manual,
+            expensive workflows into software that serves real users.
           </p>
-          <div class="hero__scroll" data-fade>
-            <span class="hero__scroll-text">Scroll to explore</span>
-            <span class="hero__scroll-line"></span>
+          <div class="hero__actions" data-fade>
+            <a href="#work" class="btn btn--primary" data-hover>View selected work</a>
+            <a href="#contact" class="btn btn--ghost" data-hover>Get in touch</a>
           </div>
+        </div>
+
+        <div class="hero__scroll" data-fade aria-hidden="true">
+          <span>Scroll</span>
+          <span class="hero__scroll-line"></span>
         </div>
       </section>
 
-      <!-- ============ MARQUEE ============ -->
-      <div class="marquee" aria-hidden="true">
-        <div class="marquee__track" id="marquee-track">
-          <span class="marquee__group">
-            <span>React.js</span><i>✦</i><span>Node.js</span><i>✦</i><span>MongoDB</span
-            ><i>✦</i><span>Express</span><i>✦</i><span>Claude</span><i>✦</i
-            ><span>LangChain</span><i>✦</i><span>RAG</span><i>✦</i><span>Vector DBs</span
-            ><i>✦</i><span>Knowledge Graphs</span><i>✦</i><span>MCP</span><i>✦</i
-            ><span>n8n</span><i>✦</i><span>Playwright</span><i>✦</i><span>SQL</span><i>✦</i>
-          </span>
-          <span class="marquee__group">
-            <span>React.js</span><i>✦</i><span>Node.js</span><i>✦</i><span>MongoDB</span
-            ><i>✦</i><span>Express</span><i>✦</i><span>Claude</span><i>✦</i
-            ><span>LangChain</span><i>✦</i><span>RAG</span><i>✦</i><span>Vector DBs</span
-            ><i>✦</i><span>Knowledge Graphs</span><i>✦</i><span>MCP</span><i>✦</i
-            ><span>n8n</span><i>✦</i><span>Playwright</span><i>✦</i><span>SQL</span><i>✦</i>
-          </span>
+      <!-- ============ METRICS MARQUEE ============ -->
+      <section class="metrics" aria-label="Impact at a glance">
+        <div class="metrics__marquee" aria-hidden="true">
+          <div class="metrics__track" id="metrics-track">
+            <span class="metrics__group">
+              <b>~4.5</b> yrs shipping production software <i>✦</i>
+              <b>9,000+</b> work orders managed <i>✦</i>
+              <b>200</b> users on multi-tenant SSO <i>✦</i>
+              <b>35%</b> faster API responses <i>✦</i>
+              <b>8</b> platforms automated by one agent <i>✦</i>
+              <b>15 hrs→30 min</b> weekly reporting <i>✦</i>
+            </span>
+            <span class="metrics__group">
+              <b>~4.5</b> yrs shipping production software <i>✦</i>
+              <b>9,000+</b> work orders managed <i>✦</i>
+              <b>200</b> users on multi-tenant SSO <i>✦</i>
+              <b>35%</b> faster API responses <i>✦</i>
+              <b>8</b> platforms automated by one agent <i>✦</i>
+              <b>15 hrs→30 min</b> weekly reporting <i>✦</i>
+            </span>
+          </div>
         </div>
-      </div>
+      </section>
 
       <!-- ============ ABOUT ============ -->
       <section class="section about" id="about">
         <div class="section__head">
-          <span class="section__index" data-fade>01</span>
-          <h2 class="section__title" data-split>The operator who codes</h2>
+          <span class="section__index" data-fade>(01)</span>
+          <span class="section__label" data-fade>About</span>
         </div>
 
         <div class="about__grid">
-          <p class="about__lead" data-split-lines>
-            Before I wrote a single line of code, I ran businesses — event
-            management, exports and interior design. That operator lens is why my
-            AI products solve real problems instead of just demoing well.
-          </p>
+          <h2 class="about__lead" data-split-lines>
+            Full Stack Engineer who owns features <em>end-to-end</em> — architecture
+            and API design through deployment — and ships AI that solves real
+            business problems.
+          </h2>
           <div class="about__body">
             <p data-fade>
-              Today I'm a GenAI Architect &amp; Full Stack Developer based in
-              Chennai. I design and ship Gen AI systems with Claude, LangChain,
-              RAG, Vector DBs and Knowledge Graphs — and build the end-to-end
-              MERN applications around them.
+              I'm strong across React.js, Node.js / Express, Python and SQL / NoSQL
+              (PostgreSQL, MongoDB, MSSQL), with proven results in performance
+              optimization, multi-tenant systems and AI engineering — RAG,
+              multi-agent workflows and knowledge graphs.
             </p>
             <p data-fade>
-              If you have repetitive, expensive or unscalable work, a single
-              well-built AI system can replace the entire workflow. That's what
-              I do.
+              I've shipped an 8-module planning platform serving 30 daily users
+              and a multi-tenant SSO system for 200 users. I thrive owning work
+              end-to-end in fast-paced, stakeholder-facing teams.
             </p>
+            <div class="about__now" data-fade>
+              <span class="about__now-dot"></span>
+              Currently building full-stack products &amp; GenAI systems at
+              Different&nbsp;Hair &amp; CX&nbsp;Analytix.
+            </div>
           </div>
         </div>
 
         <div class="about__stats">
-          <div class="stat" data-fade>
-            <span class="stat__num" data-counter="4">0</span><span class="stat__plus">+</span>
-            <span class="stat__label">Years engineering</span>
+          <div class="stat" data-reveal>
+            <span class="stat__num"><span data-counter="4.5" data-decimals="1">0</span></span>
+            <span class="stat__label">Years of experience</span>
           </div>
-          <div class="stat" data-fade>
-            <span class="stat__num" data-counter="7">0</span><span class="stat__plus">+</span>
-            <span class="stat__label">Platforms automated by one agent</span>
+          <div class="stat" data-reveal>
+            <span class="stat__num"><span data-counter="9000" data-suffix="+">0</span></span>
+            <span class="stat__label">Work orders digitized</span>
           </div>
-          <div class="stat" data-fade>
-            <span class="stat__num" data-counter="3">0</span><span class="stat__plus"></span>
-            <span class="stat__label">Businesses run before tech</span>
+          <div class="stat" data-reveal>
+            <span class="stat__num"><span data-counter="200">0</span></span>
+            <span class="stat__label">Users on SSO platform</span>
+          </div>
+          <div class="stat" data-reveal>
+            <span class="stat__num"><span data-counter="35" data-suffix="%">0</span></span>
+            <span class="stat__label">Faster API responses</span>
           </div>
         </div>
       </section>
 
-      <!-- ============ SERVICES ============ -->
-      <section class="section services">
-        <div class="section__head">
-          <span class="section__index" data-fade>02</span>
-          <h2 class="section__title" data-split>What I do</h2>
-        </div>
-
-        <div class="services__list">
-          <article class="service" data-reveal data-hover-card>
-            <span class="service__num">01</span>
-            <h3 class="service__title">Gen AI Systems</h3>
-            <p class="service__desc">
-              Design and ship production Gen AI — AI agents, RAG pipelines,
-              enterprise chatbots — using Claude, LangChain, Vector DBs and
-              Knowledge Graphs.
-            </p>
-            <ul class="service__tags">
-              <li>AI Agents</li><li>RAG</li><li>MCP</li><li>Knowledge Graphs</li>
-            </ul>
-          </article>
-
-          <article class="service" data-reveal data-hover-card>
-            <span class="service__num">02</span>
-            <h3 class="service__title">Full Stack MERN</h3>
-            <p class="service__desc">
-              End-to-end web applications with React, Node.js, Express and
-              MongoDB — from data model to a polished, performant interface.
-            </p>
-            <ul class="service__tags">
-              <li>React.js</li><li>Node.js</li><li>Express</li><li>MongoDB</li><li>SQL</li>
-            </ul>
-          </article>
-
-          <article class="service" data-reveal data-hover-card>
-            <span class="service__num">03</span>
-            <h3 class="service__title">Workflow Automation</h3>
-            <p class="service__desc">
-              Multi-platform automations that replace entire workflows —
-              architected with n8n, Playwright and PyAutoGUI.
-            </p>
-            <ul class="service__tags">
-              <li>n8n</li><li>Playwright</li><li>PyAutoGUI</li><li>APIs</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <!-- ============ WORK ============ -->
+      <!-- ============ SELECTED WORK ============ -->
       <section class="section work" id="work">
         <div class="section__head">
-          <span class="section__index" data-fade>03</span>
-          <h2 class="section__title" data-split>Selected work</h2>
+          <span class="section__index" data-fade>(02)</span>
+          <span class="section__label" data-fade>Selected work</span>
         </div>
+        <h2 class="section__title" data-split>Things I've shipped</h2>
 
         <div class="work__list">
-          <article class="project" data-reveal data-hover-card>
-            <div class="project__index">P—01</div>
-            <div class="project__content">
-              <h3 class="project__title">Omni-Platform AI Marketing Agent</h3>
-              <p class="project__desc">
-                An autonomous marketing agent that runs content, social and
-                analytics across 7+ platforms — Instagram, Facebook, YouTube,
-                TikTok, LinkedIn, Pinterest and Blog — end to end, without a
-                human in the loop.
-              </p>
-              <ul class="project__tags">
-                <li>AI Agents</li><li>n8n</li><li>Automation</li><li>Analytics</li>
-              </ul>
+          <!-- 1 -->
+          <article class="card" data-reveal data-hover-card>
+            <div class="card__head">
+              <span class="card__no">01</span>
+              <span class="card__meta">Different Hair · 2025</span>
             </div>
-            <div class="project__visual project__visual--a" aria-hidden="true"></div>
+            <h3 class="card__title">Production Planning System</h3>
+            <p class="card__desc">
+              Architected and shipped an 8-module platform that digitized a fully
+              manual, handwritten process — managing 9,000+ work orders, 4,500+
+              SKUs, 16 BORs and 8 stations, with a real-time timeline tracking
+              every work order's full lifecycle. Owned design through deployment
+              with company leadership.
+            </p>
+            <div class="card__stats">
+              <span><b>9,000+</b> work orders</span>
+              <span><b>30</b> daily users</span>
+              <span><b>8</b> modules · RBAC</span>
+            </div>
+            <ul class="tags">
+              <li>React</li><li>Node.js</li><li>Express</li><li>PostgreSQL</li>
+            </ul>
           </article>
 
-          <article class="project" data-reveal data-hover-card>
-            <div class="project__index">P—02</div>
-            <div class="project__content">
-              <h3 class="project__title">Enterprise Knowledge Chatbot</h3>
-              <p class="project__desc">
-                A RAG-powered chatbot that answers client queries accurately
-                over complex internal data — grounded retrieval, no
-                hallucinated answers.
-              </p>
-              <ul class="project__tags">
-                <li>RAG</li><li>Claude</li><li>Vector DBs</li><li>LangChain</li>
-              </ul>
+          <!-- 2 -->
+          <article class="card" data-reveal data-hover-card>
+            <div class="card__head">
+              <span class="card__no">02</span>
+              <span class="card__meta">GenAI · Multi-agent</span>
             </div>
-            <div class="project__visual project__visual--b" aria-hidden="true"></div>
+            <h3 class="card__title">Multi-Platform Content Agent</h3>
+            <p class="card__desc">
+              An autonomous multi-agent system that produces complete daily social
+              posts — images, copy, captions and hashtags — end-to-end from a
+              single prompt, tailored separately for 8 platforms. Eliminated
+              manual content production across the team's channels.
+            </p>
+            <div class="card__stats">
+              <span><b>8</b> platforms</span>
+              <span><b>1</b> prompt → full posts</span>
+              <span><b>0</b> manual steps</span>
+            </div>
+            <ul class="tags">
+              <li>LangChain</li><li>LangGraph</li><li>n8n</li><li>Multi-agent</li>
+            </ul>
           </article>
 
-          <article class="project" data-reveal data-hover-card>
-            <div class="project__index">P—03</div>
-            <div class="project__content">
-              <h3 class="project__title">Knowledge-Graph Retrieval R&amp;D</h3>
-              <p class="project__desc">
-                Ongoing research on knowledge-graph-backed retrieval — pushing
-                accuracy and reasoning beyond what traditional vector RAG can
-                deliver.
-              </p>
-              <ul class="project__tags">
-                <li>Knowledge Graphs</li><li>Retrieval</li><li>R&amp;D</li>
-              </ul>
+          <!-- 3 -->
+          <article class="card card--live" data-reveal data-hover-card>
+            <div class="card__head">
+              <span class="card__no">03</span>
+              <a class="card__live" href="https://hc-chat-widget.vercel.app" target="_blank" rel="noopener noreferrer" data-hover>Live ↗</a>
             </div>
-            <div class="project__visual project__visual--c" aria-hidden="true"></div>
+            <h3 class="card__title">Production RAG Chatbot</h3>
+            <p class="card__desc">
+              A deployed RAG chatbot over complex internal data using vector
+              databases and LangChain, embedded as a live widget. Fields 30–150
+              user queries a day with accurate self-serve answers, cutting
+              repetitive support load.
+            </p>
+            <div class="card__stats">
+              <span><b>30–150</b> queries / day</span>
+              <span><b>Live</b> widget</span>
+              <span><b>RAG</b> grounded</span>
+            </div>
+            <ul class="tags">
+              <li>RAG</li><li>Vector DBs</li><li>LangChain</li><li>Python</li>
+            </ul>
           </article>
+
+          <!-- 4 -->
+          <article class="card" data-reveal data-hover-card>
+            <div class="card__head">
+              <span class="card__no">04</span>
+              <span class="card__meta">Automation · Python</span>
+            </div>
+            <h3 class="card__title">SEO Analytics Agent</h3>
+            <p class="card__desc">
+              A custom agent that ingests Google Search Console and GA4 data and
+              auto-delivers scheduled weekly SEO, AEO and GEO reports — reducing
+              manual reporting from 15 hours a week to under 30 minutes.
+            </p>
+            <div class="card__stats">
+              <span><b>15 hrs → 30 min</b></span>
+              <span><b>GSC + GA4</b></span>
+              <span><b>Weekly</b> auto-reports</span>
+            </div>
+            <ul class="tags">
+              <li>Python</li><li>n8n</li><li>GA4</li><li>Search Console</li>
+            </ul>
+          </article>
+
+          <!-- 5 -->
+          <article class="card" data-reveal data-hover-card>
+            <div class="card__head">
+              <span class="card__no">05</span>
+              <span class="card__meta">CX Analytix · B2B</span>
+            </div>
+            <h3 class="card__title">Email-Marketing Analytics</h3>
+            <p class="card__desc">
+              A B2B analytics product that surfaces campaign KPIs through live
+              dashboards, giving clients real-time visibility into performance
+              and cutting manual reporting by ~10 hours a week.
+            </p>
+            <div class="card__stats">
+              <span><b>~10 hrs/wk</b> saved</span>
+              <span><b>Live</b> dashboards</span>
+              <span><b>Real-time</b> KPIs</span>
+            </div>
+            <ul class="tags">
+              <li>Node.js</li><li>Python</li><li>PostgreSQL</li>
+            </ul>
+          </article>
+
+          <!-- 6 -->
+          <article class="card" data-reveal data-hover-card>
+            <div class="card__head">
+              <span class="card__no">06</span>
+              <span class="card__meta">Minsway · Platform</span>
+            </div>
+            <h3 class="card__title">Multi-Tenant SSO Platform</h3>
+            <p class="card__desc">
+              A single sign-on system serving 200 users across ~25 tenants —
+              centralizing authentication and access control with secure,
+              tenant-aware session handling. Paired with Monad, a Saudi B2B
+              wholesale platform where I cut API response time by 35%.
+            </p>
+            <div class="card__stats">
+              <span><b>200</b> users</span>
+              <span><b>~25</b> tenants</span>
+              <span><b>35%</b> faster APIs</span>
+            </div>
+            <ul class="tags">
+              <li>React</li><li>Node.js</li><li>MSSQL</li><li>SSO · Caching</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ STACK ============ -->
+      <section class="section stack" id="stack">
+        <div class="section__head">
+          <span class="section__index" data-fade>(03)</span>
+          <span class="section__label" data-fade>Stack</span>
+        </div>
+        <h2 class="section__title" data-split>Tools I reach for</h2>
+
+        <div class="stack__grid">
+          <div class="stack__row" data-reveal>
+            <span class="stack__cat">Languages</span>
+            <ul class="stack__items"><li>JavaScript</li><li>Python</li><li>SQL</li></ul>
+          </div>
+          <div class="stack__row" data-reveal>
+            <span class="stack__cat">Frontend</span>
+            <ul class="stack__items"><li>React.js</li><li>Tailwind CSS</li><li>shadcn/ui</li><li>Responsive UI</li><li>UI/UX sense</li></ul>
+          </div>
+          <div class="stack__row" data-reveal>
+            <span class="stack__cat">Backend</span>
+            <ul class="stack__items"><li>Node.js</li><li>Express.js</li><li>FastAPI</li><li>Flask</li><li>REST API design</li></ul>
+          </div>
+          <div class="stack__row" data-reveal>
+            <span class="stack__cat">Databases</span>
+            <ul class="stack__items"><li>PostgreSQL</li><li>MongoDB</li><li>MSSQL</li><li>Neo4j</li><li>pgvector</li><li>Knowledge Graphs</li></ul>
+          </div>
+          <div class="stack__row" data-reveal>
+            <span class="stack__cat">GenAI / AI</span>
+            <ul class="stack__items"><li>RAG</li><li>LangChain</li><li>LangGraph</li><li>MCP</li><li>Multi-agent systems</li><li>Prompt / Context Eng.</li></ul>
+          </div>
+          <div class="stack__row" data-reveal>
+            <span class="stack__cat">Automation</span>
+            <ul class="stack__items"><li>n8n</li><li>RPA</li><li>Workflow automation</li><li>Playwright</li></ul>
+          </div>
+          <div class="stack__row" data-reveal>
+            <span class="stack__cat">Practices</span>
+            <ul class="stack__items"><li>Agile / Scrum</li><li>Git / GitHub</li><li>CI/CD (Vercel, Render)</li><li>Multi-tenant SSO</li><li>Caching</li><li>E2E ownership</li></ul>
+          </div>
+          <div class="stack__row stack__row--dim" data-reveal>
+            <span class="stack__cat">Familiar</span>
+            <ul class="stack__items"><li>TypeScript</li><li>React Native</li><li>Redis</li><li>Docker</li><li>TanStack Query</li><li>Microservices</li></ul>
+          </div>
         </div>
       </section>
 
       <!-- ============ EXPERIENCE ============ -->
       <section class="section experience" id="experience">
         <div class="section__head">
-          <span class="section__index" data-fade>04</span>
-          <h2 class="section__title" data-split>Experience</h2>
+          <span class="section__index" data-fade>(04)</span>
+          <span class="section__label" data-fade>Experience</span>
         </div>
+        <h2 class="section__title" data-split>Where I've worked</h2>
 
-        <div class="experience__list">
-          <div class="xp" data-reveal>
-            <span class="xp__period">May 2025 — Present</span>
+        <div class="xp__list">
+          <article class="xp" data-reveal>
+            <div class="xp__period">
+              <span class="xp__dates">May 2025 — Present</span>
+              <span class="xp__where">Chennai, India</span>
+            </div>
             <div class="xp__main">
               <h3 class="xp__role">Full Stack Developer</h3>
-              <span class="xp__company">Different Hair Pvt. Ltd — Chennai</span>
+              <span class="xp__company">Different Hair Pvt. Ltd &amp; CX Analytix</span>
+              <p class="xp__desc">
+                Building production web apps and GenAI systems end-to-end. Shipped
+                an 8-module production planning platform, a B2B email-analytics
+                product, autonomous content &amp; SEO agents, a deployed RAG
+                chatbot, and a human-in-the-loop RPA timesheet workflow for a
+                60-person team.
+              </p>
+              <ul class="tags">
+                <li>React</li><li>Node.js</li><li>Python</li><li>PostgreSQL</li><li>LangChain</li><li>n8n</li>
+              </ul>
             </div>
-          </div>
-          <div class="xp" data-reveal>
-            <span class="xp__period">May 2025 — Present</span>
-            <div class="xp__main">
-              <h3 class="xp__role">Full Stack Developer</h3>
-              <span class="xp__company">CX Analytix — Chennai</span>
+          </article>
+
+          <article class="xp" data-reveal>
+            <div class="xp__period">
+              <span class="xp__dates">Dec 2021 — May 2025</span>
+              <span class="xp__where">Chennai, India</span>
             </div>
-          </div>
-          <div class="xp" data-reveal>
-            <span class="xp__period">Dec 2021 — May 2025</span>
             <div class="xp__main">
               <h3 class="xp__role">Software Engineer</h3>
-              <span class="xp__company">Minsway Solutions Pvt Ltd — Chennai</span>
+              <span class="xp__company">Minsway Solutions Pvt Ltd</span>
+              <p class="xp__desc">
+                Built React dashboards and Node.js APIs for Monad, a Saudi B2B
+                wholesale platform — cutting API response time 35% with caching
+                and query optimization. Designed a multi-tenant SSO system for
+                200 users across ~25 tenants, and shipped production features in
+                Agile sprints with cross-functional teams.
+              </p>
+              <ul class="tags">
+                <li>React</li><li>Node.js</li><li>MSSQL</li><li>SSO</li><li>Caching</li>
+              </ul>
             </div>
-          </div>
-          <div class="xp xp--edu" data-reveal>
-            <span class="xp__period">2017 — 2021</span>
+          </article>
+
+          <article class="xp xp--edu" data-reveal>
+            <div class="xp__period">
+              <span class="xp__dates">2017 — 2021</span>
+              <span class="xp__where">Chennai, India</span>
+            </div>
             <div class="xp__main">
-              <h3 class="xp__role">Master of Mechanical Engineering</h3>
+              <h3 class="xp__role">B.E., Mechanical Engineering</h3>
               <span class="xp__company">Easwari Engineering College (SRM Group)</span>
             </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ INDEPENDENT PROJECTS ============ -->
+      <section class="section labs">
+        <div class="section__head">
+          <span class="section__index" data-fade>(05)</span>
+          <span class="section__label" data-fade>Independent projects</span>
+        </div>
+        <h2 class="section__title" data-split>Built on my own time</h2>
+
+        <div class="labs__grid">
+          <article class="lab" data-reveal data-hover-card>
+            <h3 class="lab__title">AI Medical Report Scanner</h3>
+            <p class="lab__desc">
+              Reads medical lab reports and explains a user's real health status
+              in plain language — combining OCR / vision, LLM reasoning and a
+              medical knowledge layer. Designed education-first to stay outside
+              medical-device classification.
+            </p>
+            <ul class="tags"><li>Python</li><li>Vision</li><li>LLM</li><li>Knowledge layer</li></ul>
+          </article>
+
+          <article class="lab" data-reveal data-hover-card>
+            <h3 class="lab__title">Food-Image Nutrition Analyzer</h3>
+            <p class="lab__desc">
+              Turns a photo of a meal into a full macro and nutrient breakdown
+              for diet tracking — pairing a vision LLM with a nutrition database
+              and capturing structured intake to personalize insights.
+            </p>
+            <ul class="tags"><li>Vision LLM</li><li>Python</li><li>Nutrition DB</li></ul>
+          </article>
+
+          <article class="lab" data-reveal data-hover-card>
+            <h3 class="lab__title">Fun Friday Arena</h3>
+            <p class="lab__desc">
+              A real-time multiplayer gaming platform for internal teams (UNO,
+              chess and more) with live state synchronization and concurrent
+              sessions over WebSockets.
+            </p>
+            <ul class="tags"><li>WebSockets</li><li>React</li><li>Node.js</li></ul>
+          </article>
+        </div>
+
+        <div class="certs" data-reveal>
+          <span class="certs__label">Certifications</span>
+          <div class="certs__list">
+            <span>Generative AI for Web Developers</span>
+            <span>Agent Development</span>
+            <span>Operating Systems: Overview, Administration &amp; Security</span>
+            <span>Technical Support Fundamentals</span>
           </div>
         </div>
       </section>
 
       <!-- ============ CONTACT ============ -->
       <section class="section contact" id="contact">
-        <span class="contact__kicker" data-fade>Have repetitive, expensive or unscalable work?</span>
+        <span class="contact__kicker" data-fade>
+          <i class="hero__dot"></i> Available for full-stack &amp; AI engineering roles
+        </span>
         <h2 class="contact__title">
-          <span class="hero__line"><span class="hero__line-inner">LET'S</span></span>
-          <span class="hero__line"><span class="hero__line-inner">AUTOMATE IT<span class="accent">.</span></span></span>
+          <span class="hero__line"><span class="hero__line-inner">LET'S BUILD</span></span>
+          <span class="hero__line"><span class="hero__line-inner">SOMETHING <span class="hero__serif">real</span></span></span>
         </h2>
-        <a
-          href="mailto:rishivendhan.tech@gmail.com"
-          class="contact__email"
-          data-hover
-          data-fade
-          >rishivendhan.tech@gmail.com</a
-        >
-        <div class="contact__links" data-fade>
-          <a href="https://www.linkedin.com/in/rishivendhan" target="_blank" rel="noopener noreferrer" data-hover>LinkedIn ↗</a>
-          <a href="tel:+918248647689" data-hover>+91 82486 47689</a>
+        <a href="mailto:rishivendhan.tech@gmail.com" class="contact__email" data-hover data-fade>
+          rishivendhan.tech@gmail.com
+        </a>
+
+        <div class="contact__grid" data-fade>
+          <a class="contact__item" href="https://www.linkedin.com/in/rishivendhan" target="_blank" rel="noopener noreferrer" data-hover>
+            <span class="contact__item-label">LinkedIn</span>
+            <span class="contact__item-val">in/rishivendhan ↗</span>
+          </a>
+          <a class="contact__item" href="https://github.com/rishivendhan84" target="_blank" rel="noopener noreferrer" data-hover>
+            <span class="contact__item-label">GitHub</span>
+            <span class="contact__item-val">rishivendhan84 ↗</span>
+          </a>
+          <a class="contact__item" href="tel:+918248647689" data-hover>
+            <span class="contact__item-label">Phone</span>
+            <span class="contact__item-val">+91 82486 47689</span>
+          </a>
+          <a class="contact__item" href="/Rishi_Vendhan_Resume.docx" download data-hover>
+            <span class="contact__item-label">Résumé</span>
+            <span class="contact__item-val">Download ↓</span>
+          </a>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <span>© <span id="year">2026</span> Rishi Vendhan K K</span>
-      <span>Chennai, Tamil Nadu, India</span>
-      <a href="#hero" data-hover>Back to top ↑</a>
+      <span class="footer__c">© <span id="year">2026</span> Rishi Vendhan K K</span>
+      <span class="footer__built">Built with Three.js · GSAP · Vite</span>
+      <a href="#hero" class="footer__top" data-hover>Back to top ↑</a>
     </footer>
 
     <script type="module" src="/src/main.js"></script>
