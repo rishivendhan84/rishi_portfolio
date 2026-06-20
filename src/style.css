@@ -538,8 +538,8 @@ main {
 .hero__title {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(3rem, 15vw, 14rem);
-  line-height: 0.9;
+  font-size: clamp(2.3rem, 11.5vw, 10.5rem);
+  line-height: 0.92;
   letter-spacing: -0.04em;
   text-transform: uppercase;
 }
@@ -555,9 +555,6 @@ main {
 }
 .hero__accent {
   color: var(--accent);
-  font-size: 0.52em;
-  vertical-align: baseline;
-  letter-spacing: 0.02em;
 }
 
 .hero__bottom {
@@ -1048,8 +1045,8 @@ main {
 .contact__title {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(2.6rem, 11vw, 9rem);
-  line-height: 0.92;
+  font-size: clamp(1.85rem, 8.5vw, 7.5rem);
+  line-height: 0.94;
   letter-spacing: -0.04em;
   text-transform: uppercase;
 }
