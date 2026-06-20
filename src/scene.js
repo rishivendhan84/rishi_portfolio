@@ -107,8 +107,8 @@ const fragmentShader = /* glsl */ `
     float h = clamp(vElevation * 0.45 + 0.5, 0.0, 1.0);
     vec3 color = mix(uColorLow, uColorHigh, pow(h, 1.3));
 
-    // warm tint near the mouse
-    color += vec3(0.35, 0.12, 0.0) * smoothstep(4.0, 0.0, vDist);
+    // cool tint near the mouse
+    color += vec3(0.05, 0.28, 0.42) * smoothstep(4.0, 0.0, vDist);
     color += vRandom * 0.06;
 
     float a = alpha * (0.28 + h * 0.72);
@@ -131,7 +131,7 @@ export class Scene {
 
   _init() {
     this.scene = new THREE.Scene();
-    this.scene.fog = new THREE.FogExp2(0x0a0908, 0.058);
+    this.scene.fog = new THREE.FogExp2(0x06060a, 0.058);
 
     this.camera = new THREE.PerspectiveCamera(
       52,
@@ -148,7 +148,7 @@ export class Scene {
       alpha: false,
       powerPreference: 'high-performance',
     });
-    this.renderer.setClearColor(0x0a0908, 1);
+    this.renderer.setClearColor(0x06060a, 1);
     this.pixelRatio = Math.min(window.devicePixelRatio, 2);
     this.renderer.setPixelRatio(this.pixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -198,8 +198,8 @@ export class Scene {
       uPixelRatio: { value: this.pixelRatio },
       uIntro: { value: 0 },
       uTint: { value: 0 },
-      uColorLow: { value: new THREE.Color(0x16294d) },
-      uColorHigh: { value: new THREE.Color(0xff7a44) },
+      uColorLow: { value: new THREE.Color(0x2a2550) },
+      uColorHigh: { value: new THREE.Color(0x6ee7ff) },
     };
 
     const material = new THREE.ShaderMaterial({

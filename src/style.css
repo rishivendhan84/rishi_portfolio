@@ -1,14 +1,14 @@
 :root {
-  --bg: #0a0908;
-  --bg-soft: #12100e;
-  --surface: rgba(255, 251, 245, 0.025);
-  --ink: #f4f1ea;
-  --ink-dim: #9b948a;
-  --ink-faint: #5f594f;
-  --accent: #ff6a3d;
-  --accent-2: #5b9dff;
-  --line: rgba(244, 241, 234, 0.1);
-  --line-soft: rgba(244, 241, 234, 0.06);
+  --bg: #06060a;
+  --bg-soft: #0b0b12;
+  --surface: rgba(236, 234, 246, 0.025);
+  --ink: #eceaf6;
+  --ink-dim: #8b8a99;
+  --ink-faint: #5f5d6b;
+  --accent: #6ee7ff;
+  --accent-2: #8a7dff;
+  --line: rgba(236, 234, 246, 0.1);
+  --line-soft: rgba(236, 234, 246, 0.06);
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
   --pad: clamp(1.25rem, 4.5vw, 5rem);
@@ -50,7 +50,7 @@ body {
 
 ::selection {
   background: var(--accent);
-  color: #0a0908;
+  color: #06060a;
 }
 
 a {
@@ -79,7 +79,7 @@ img {
   left: 1rem;
   z-index: 200;
   background: var(--accent);
-  color: #0a0908;
+  color: #06060a;
   padding: 0.6rem 1rem;
   border-radius: 6px;
   font-size: 0.85rem;
@@ -108,7 +108,7 @@ em {
   right: 0;
   bottom: 0.02em;
   height: 0.5em;
-  background: linear-gradient(180deg, transparent 60%, rgba(255, 106, 61, 0.25) 60%);
+  background: linear-gradient(180deg, transparent 60%, rgba(110, 231, 255, 0.25) 60%);
   z-index: -1;
 }
 
@@ -128,8 +128,8 @@ em {
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(120% 80% at 50% -10%, rgba(255, 106, 61, 0.07), transparent 55%),
-    radial-gradient(100% 60% at 100% 110%, rgba(91, 157, 255, 0.07), transparent 50%);
+    radial-gradient(120% 80% at 50% -10%, rgba(110, 231, 255, 0.07), transparent 55%),
+    radial-gradient(100% 60% at 100% 110%, rgba(138, 125, 255, 0.07), transparent 50%);
 }
 
 .noise {
@@ -220,7 +220,7 @@ em {
 .cursor {
   width: 40px;
   height: 40px;
-  border: 1px solid rgba(244, 241, 234, 0.5);
+  border: 1px solid rgba(236, 234, 246, 0.5);
   transform: translate(-50%, -50%);
   display: grid;
   place-items: center;
@@ -229,7 +229,7 @@ em {
 .cursor.is-hover {
   width: 72px;
   height: 72px;
-  background: rgba(244, 241, 234, 0.08);
+  background: rgba(236, 234, 246, 0.08);
   border-color: transparent;
 }
 .cursor__label {
@@ -321,7 +321,7 @@ em {
   padding: 0.35rem;
   border: 1px solid var(--line-soft);
   border-radius: 999px;
-  background: rgba(255, 251, 245, 0.02);
+  background: rgba(236, 234, 246, 0.02);
 }
 .header__link {
   font-size: 0.8rem;
@@ -333,7 +333,7 @@ em {
 }
 .header__link:hover {
   color: var(--ink);
-  background: rgba(255, 251, 245, 0.05);
+  background: rgba(236, 234, 246, 0.05);
 }
 
 .header__cta {
@@ -483,11 +483,11 @@ main {
 }
 .btn--primary {
   background: var(--accent);
-  color: #160a06;
+  color: #06060a;
 }
 .btn--primary:hover {
   transform: translateY(-2px);
-  background: #ff855e;
+  background: #9af0ff;
 }
 .btn--ghost {
   border-color: var(--line);
@@ -496,7 +496,7 @@ main {
 .btn--ghost:hover {
   transform: translateY(-2px);
   border-color: var(--ink);
-  background: rgba(255, 251, 245, 0.04);
+  background: rgba(236, 234, 246, 0.04);
 }
 
 /* ---------- Hero ---------- */
@@ -550,10 +550,14 @@ main {
 }
 .hero__line-inner {
   display: inline-block;
+  white-space: nowrap;
   will-change: transform;
 }
 .hero__accent {
   color: var(--accent-2);
+  font-size: 0.5em;
+  vertical-align: 0.32em;
+  letter-spacing: 0.01em;
 }
 
 .hero__bottom {
@@ -754,15 +758,15 @@ main {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(500px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 106, 61, 0.1), transparent 55%);
+  background: radial-gradient(500px circle at var(--mx, 50%) var(--my, 0%), rgba(110, 231, 255, 0.1), transparent 55%);
   opacity: 0;
   transition: opacity 0.5s;
   pointer-events: none;
 }
 .card:hover {
   transform: translateY(-5px);
-  border-color: rgba(255, 106, 61, 0.3);
-  background: rgba(255, 106, 61, 0.03);
+  border-color: rgba(110, 231, 255, 0.3);
+  background: rgba(110, 231, 255, 0.03);
 }
 .card:hover::before { opacity: 1; }
 
@@ -866,7 +870,7 @@ main {
 }
 .stack__row:hover {
   padding-left: 1.25rem;
-  background: rgba(255, 251, 245, 0.015);
+  background: rgba(236, 234, 246, 0.015);
 }
 .stack__cat {
   font-family: var(--font-display);
@@ -972,7 +976,7 @@ main {
 }
 .lab:hover {
   transform: translateY(-5px);
-  border-color: rgba(255, 106, 61, 0.3);
+  border-color: rgba(110, 231, 255, 0.3);
 }
 .lab__title {
   font-family: var(--font-display);
