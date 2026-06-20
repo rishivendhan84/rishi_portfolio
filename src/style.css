@@ -4,7 +4,7 @@
   --surface: rgba(236, 234, 246, 0.025);
   --ink: #eceaf6;
   --ink-dim: #8b8a99;
-  --ink-faint: #5f5d6b;
+  --ink-faint: #6f6d84;
   --accent: #6ee7ff;
   --accent-2: #8a7dff;
   --line: rgba(236, 234, 246, 0.1);
@@ -271,7 +271,7 @@ em {
   border-bottom: 1px solid transparent;
 }
 .header.is-scrolled {
-  background: rgba(10, 9, 8, 0.7);
+  background: rgba(6, 6, 10, 0.7);
   backdrop-filter: blur(14px) saturate(140%);
   border-bottom-color: var(--line-soft);
 }
@@ -392,7 +392,7 @@ em {
   position: fixed;
   inset: 0;
   z-index: 80;
-  background: rgba(10, 9, 8, 0.96);
+  background: rgba(6, 6, 10, 0.96);
   backdrop-filter: blur(16px);
   display: flex;
   flex-direction: column;
@@ -554,10 +554,10 @@ main {
   will-change: transform;
 }
 .hero__accent {
-  color: var(--accent-2);
-  font-size: 0.5em;
-  vertical-align: 0.32em;
-  letter-spacing: 0.01em;
+  color: var(--accent);
+  font-size: 0.52em;
+  vertical-align: baseline;
+  letter-spacing: 0.02em;
 }
 
 .hero__bottom {
@@ -627,7 +627,7 @@ main {
   z-index: 2;
   border-top: 1px solid var(--line-soft);
   border-bottom: 1px solid var(--line-soft);
-  background: rgba(10, 9, 8, 0.5);
+  background: rgba(6, 6, 10, 0.5);
   backdrop-filter: blur(8px);
   overflow: hidden;
   padding: 1.5rem 0;
