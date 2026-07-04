@@ -234,6 +234,40 @@ if (track && !reduceMotion) {
   });
 }
 
+/* ---------- Game mode (lazy-loaded, leaves the site untouched) ---------- */
+let activeGame = null;
+let gameLoading = false;
+
+async function launchGame() {
+  if (activeGame || gameLoading) return;
+  gameLoading = true;
+  document.querySelectorAll('[data-game-launch]').forEach((b) => b.classList.add('is-loading'));
+  try {
+    const { PortfolioGame } = await import('./game.js');
+    closeMenu();
+    lenis.stop();
+    if (scene) scene.running = false;
+    document.body.classList.add('is-game');
+    activeGame = new PortfolioGame({
+      onExit: () => {
+        activeGame = null;
+        document.body.classList.remove('is-game');
+        lenis.start();
+        if (scene) scene.running = true;
+      },
+    });
+  } catch (err) {
+    console.error('Game mode failed to start.', err);
+  } finally {
+    gameLoading = false;
+    document.querySelectorAll('[data-game-launch]').forEach((b) => b.classList.remove('is-loading'));
+  }
+}
+
+document.querySelectorAll('[data-game-launch]').forEach((btn) => {
+  btn.addEventListener('click', launchGame);
+});
+
 /* ---------- Year ---------- */
 document.getElementById('year').textContent = new Date().getFullYear();
 

@@ -360,6 +360,36 @@ em {
   transform: translateY(2px);
 }
 
+.header__game {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font: 500 0.8rem/1 var(--font-body);
+  letter-spacing: 0.03em;
+  color: var(--accent);
+  background: rgba(110, 231, 255, 0.06);
+  border: 1px solid rgba(110, 231, 255, 0.35);
+  border-radius: 999px;
+  padding: 0.55rem 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.header__game:hover {
+  background: var(--accent);
+  color: var(--bg);
+  box-shadow: 0 0 22px rgba(110, 231, 255, 0.45);
+}
+.header__game-icon {
+  font-size: 0.6rem;
+  transform: translateY(-1px);
+}
+.header__game.is-loading,
+.btn--game.is-loading,
+.mobile-menu__game.is-loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .header__menu {
   display: none;
   flex-direction: column;
@@ -382,9 +412,14 @@ em {
 .header__menu.is-open span:nth-child(2) { transform: translateY(-3px) rotate(-45deg); }
 
 @media (max-width: 860px) {
-  .header__nav, .header__cta { display: none; }
+  .header__nav, .header__cta, .header__game { display: none; }
   .header__menu { display: flex; }
   .header__logo-status { display: none; }
+}
+
+/* game mode: freeze the page behind the overlay */
+body.is-game {
+  overflow: hidden;
 }
 
 /* ---------- Mobile menu ---------- */
@@ -426,6 +461,17 @@ em {
   font-size: 0.95rem;
   border-top: 1px solid var(--line);
   padding-top: 1.5rem;
+}
+.mobile-menu__game {
+  align-self: flex-start;
+  font: 500 0.95rem/1 var(--font-body);
+  color: var(--accent);
+  background: rgba(110, 231, 255, 0.06);
+  border: 1px solid rgba(110, 231, 255, 0.35);
+  border-radius: 999px;
+  padding: 0.8rem 1.4rem;
+  cursor: pointer;
+  margin-bottom: 0.4rem;
 }
 
 /* ---------- Layout ---------- */
@@ -497,6 +543,30 @@ main {
   transform: translateY(-2px);
   border-color: var(--ink);
   background: rgba(236, 234, 246, 0.04);
+}
+.btn--game {
+  font-family: var(--font-body);
+  cursor: pointer;
+  color: var(--accent);
+  background: rgba(110, 231, 255, 0.06);
+  border-color: rgba(110, 231, 255, 0.35);
+}
+.btn--game:hover {
+  transform: translateY(-2px);
+  background: rgba(110, 231, 255, 0.12);
+  box-shadow: 0 0 26px rgba(110, 231, 255, 0.3);
+}
+.btn__game-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: pulse-game 1.8s infinite;
+}
+@keyframes pulse-game {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
 }
 
 /* ---------- Hero ---------- */
