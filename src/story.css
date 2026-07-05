@@ -371,13 +371,50 @@
 .game.is-tc .tc__name { opacity: 1; transform: translateY(0); }
 .game.is-tc .tc__dates { opacity: 1; }
 
+/* quiet continue affordance, appears once a line is fully on screen */
+.scene__cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+  font: 600 0.62rem/1 var(--font-display, 'Space Grotesk', sans-serif);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent, #6ee7ff);
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.85;
+  animation: rise-in 0.5s ease;
+}
+.scene__cue[hidden] { display: none !important; }
+.scene__cue i {
+  font-style: normal;
+  animation: cue-bob 1.5s ease-in-out infinite;
+}
+@keyframes cue-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(4px); opacity: 1; }
+}
+.scene__cue:hover { opacity: 1; }
+
 /* ---------- Interactive moments ---------- */
 .scene__widget {
   width: min(30rem, 100%);
   margin-top: 1.2rem;
-  max-height: 38vh;
+  max-height: 40vh;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   text-align: left;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(110, 231, 255, 0.35) transparent;
+}
+.scene__widget::-webkit-scrollbar { width: 6px; }
+.scene__widget::-webkit-scrollbar-track { background: transparent; }
+.scene__widget::-webkit-scrollbar-thumb {
+  background: rgba(110, 231, 255, 0.3);
+  border-radius: 3px;
 }
 .scene__widget:empty { display: none; }
 
@@ -487,7 +524,16 @@
   gap: 0.45rem;
   max-height: 10rem;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   padding: 0.15rem 0.1rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(110, 231, 255, 0.35) transparent;
+}
+.w-chat__log::-webkit-scrollbar { width: 5px; }
+.w-chat__log::-webkit-scrollbar-thumb {
+  background: rgba(110, 231, 255, 0.3);
+  border-radius: 3px;
 }
 .w-chat__msg {
   max-width: 88%;
