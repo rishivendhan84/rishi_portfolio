@@ -234,7 +234,7 @@ if (track && !reduceMotion) {
   });
 }
 
-/* ---------- Game mode (lazy-loaded, leaves the site untouched) ---------- */
+/* ---------- Story mode (lazy-loaded, leaves the site untouched) ---------- */
 let activeGame = null;
 let gameLoading = false;
 
@@ -257,7 +257,7 @@ async function launchGame() {
       },
     });
   } catch (err) {
-    console.error('Game mode failed to start.', err);
+    console.error('Story mode failed to start.', err);
   } finally {
     gameLoading = false;
     document.querySelectorAll('[data-game-launch]').forEach((b) => b.classList.remove('is-loading'));

@@ -1,9 +1,10 @@
 /* =========================================================================
-   GAME MODE — "THE PATHWAY", an interactive story
-   A narrative journey through the portfolio. The camera flies you between
-   chapters along a neon pathway; each chapter is told as a story with
-   hands-on interactive moments built from the real content. No reflexes
-   required — read, click, explore. Lazy-loaded; the site stays untouched.
+   STORY MODE — "THE PATHWAY"
+   A cinematic, interactive telling of the portfolio. Letterboxed like a
+   film: chapter title cards fade from black, the camera drifts through a
+   quiet particle world, and the story reveals itself word by word — with
+   interactive moments built from the real work. No game mechanics; the
+   reader sets the pace. Lazy-loaded; the site itself stays untouched.
    ========================================================================= */
 import * as THREE from 'three';
 import './game.css';
@@ -12,52 +13,31 @@ const ACCENT = 0x6ee7ff;
 const ACCENT2 = 0x8a7dff;
 const BG = 0x06060a;
 
-/* ======================= THE STORY ======================= */
+/* ======================= THE CHAPTERS ======================= */
 const CHAPTERS = [
-  {
-    key: 'origin', label: 'Prologue', title: 'Origin',
-    kicker: 'Prologue · 2017 — 2021 · Chennai', u: 0.07, scene: 'origin',
-  },
-  {
-    key: 'minsway', label: 'Ch. 01', title: 'First Contact',
-    kicker: 'Chapter 01 · Dec 2021 — May 2025 · Minsway Solutions', u: 0.21, scene: 'minsway',
-  },
-  {
-    key: 'factory', label: 'Ch. 02', title: 'The Paper Factory',
-    kicker: 'Chapter 02 · May 2025 — Present · Different Hair Pvt. Ltd', u: 0.35, scene: 'factory',
-  },
-  {
-    key: 'ai', label: 'Ch. 03', title: 'The Machines Learn',
-    kicker: 'Chapter 03 · The GenAI arc · Different Hair & CX Analytix', u: 0.50, scene: 'ai',
-  },
-  {
-    key: 'labs', label: 'Ch. 04', title: 'Side Quests',
-    kicker: 'Chapter 04 · Nights & weekends', u: 0.65, scene: 'labs',
-  },
-  {
-    key: 'stack', label: 'Ch. 05', title: 'The Arsenal',
-    kicker: 'Chapter 05 · The toolkit behind every chapter', u: 0.79, scene: 'stack',
-  },
-  {
-    key: 'epilogue', label: 'Epilogue', title: 'Your Move',
-    kicker: 'Epilogue · Chennai, India · Open to work', u: 0.92, scene: 'epilogue',
-  },
+  { key: 'origin', numeral: 'I', title: 'Origin', dates: '2017 — 2021 · Chennai', motif: 'origin' },
+  { key: 'minsway', numeral: 'II', title: 'First Contact', dates: 'Dec 2021 — May 2025 · Minsway Solutions', motif: 'towers' },
+  { key: 'factory', numeral: 'III', title: 'The Paper Factory', dates: 'May 2025 — Present · Different Hair Pvt. Ltd', motif: 'paper' },
+  { key: 'ai', numeral: 'IV', title: 'The Machines Learn', dates: 'The GenAI arc · Different Hair & CX Analytix', motif: 'neural' },
+  { key: 'labs', numeral: 'V', title: 'After Hours', dates: 'Independent projects', motif: 'artifacts' },
+  { key: 'craft', numeral: 'VI', title: 'The Craft', dates: 'One toolkit behind every chapter', motif: 'constellation' },
+  { key: 'unwritten', numeral: 'VII', title: 'The Unwritten Chapter', dates: 'Chennai, India · Open to work', motif: 'portal' },
 ];
 
-// Chapter 03 lets the reader choose the order they meet the AI systems.
+/* Chapter IV lets the reader choose the order they meet the AI systems. */
 const AGENT_BEATS = {
   rag: {
-    text: 'Meet the <b>production RAG chatbot</b> — deployed as a live widget, grounded in complex internal data with vector search and LangChain. It fields <b>30–150 real user questions a day</b>. Don’t take my word for it — interview it yourself.',
+    text: 'The <b>production RAG chatbot</b> — deployed as a live widget, grounded in complex internal data with vector search and LangChain. It answers <b>30–150 real user questions a day</b>. Don’t take the story’s word for it — interview it.',
     widget: 'chat',
     tags: ['RAG', 'Vector DBs', 'LangChain', 'Python'],
   },
   content: {
-    text: 'Next, the <b>multi-platform content agent</b>: an autonomous multi-agent system. One prompt goes in — complete daily social posts come out. Images, copy, captions, hashtags, tailored separately for <b>8 platforms</b>. Try sending one.',
+    text: 'The <b>multi-platform content agent</b> — an autonomous multi-agent system. One prompt goes in; complete daily social posts come out. Images, copy, captions, hashtags — tailored separately for <b>8 platforms</b>.',
     widget: 'platforms',
     tags: ['LangChain', 'LangGraph', 'n8n', 'Multi-agent'],
   },
   seo: {
-    text: 'And the quiet one: an <b>SEO analytics agent</b> that reads Google Search Console and GA4, then writes and delivers the weekly SEO / AEO / GEO reports on its own. A 15-hour weekly chore, automated down to 30 minutes.',
+    text: 'And the quiet one: an <b>SEO analytics agent</b> that reads Google Search Console and GA4, then writes and delivers the weekly SEO / AEO / GEO reports on its own — a 15-hour weekly chore, reduced to 30 minutes.',
     widget: 'seo',
     tags: ['Python', 'n8n', 'GA4', 'Search Console'],
   },
@@ -65,99 +45,79 @@ const AGENT_BEATS = {
 
 function buildScript() {
   return [
-    // ---- Prologue: Origin ----
-    { ch: 0, text: 'Every builder has an origin story. This one starts with <b>machines</b>.' },
-    {
-      ch: 0,
-      text: 'Easwari Engineering College, SRM Group, Chennai. A degree in <b>Mechanical Engineering</b> — gears, torque, tolerances. Four years learning how physical systems fit together.',
-    },
-    {
-      ch: 0,
-      text: 'But the machines that pulled him in weren’t made of steel. They were made of <b>code</b> — systems you could architect at midnight and ship to real users by morning. So he crossed over. He never went back.',
-    },
+    /* I · Origin */
+    { ch: 0, text: 'Every builder has an origin story.<br/>This one starts with <b>machines</b>.' },
+    { ch: 0, text: 'Chennai, 2017. Easwari Engineering College — a degree in <b>Mechanical Engineering</b>. Gears, torque, tolerances. Four years learning how physical systems fit together.' },
+    { ch: 0, text: 'But the machines that pulled him in weren’t made of steel. They were made of <b>code</b> — systems you could design at midnight and put in front of real users by morning. He crossed over. He never looked back.' },
 
-    // ---- Chapter 01: Minsway ----
+    /* II · First Contact */
+    { ch: 1, text: 'December 2021. Rishi joins <b>Minsway Solutions</b> — and meets <b>Monad</b>, a B2B wholesale platform serving businesses across Saudi Arabia. React dashboards. Node.js APIs. Real money moving through both.' },
     {
       ch: 1,
-      text: 'December 2021. Rishi joins <b>Minsway Solutions</b> as a Software Engineer — and meets <b>Monad</b>, a B2B wholesale platform serving businesses across Saudi Arabia. React dashboards, Node.js APIs, real money moving through them.',
-    },
-    {
-      ch: 1,
-      text: 'The platform worked. But “worked” isn’t the same as <b>fast</b> — and wholesale buyers don’t wait. So he went hunting through query plans, caching layers and payload sizes. Run the optimization and see what he shipped.',
+      text: 'The platform worked. But working isn’t the same as <b>fast</b> — and wholesale buyers don’t wait. He went hunting through query plans, caching layers and payload sizes. See it for yourself.',
       widget: 'latency',
     },
     {
       ch: 1,
-      text: 'Then a bigger puzzle: <b>200 users across ~25 tenant companies</b>, each needing one secure door into everything. He designed the <b>multi-tenant SSO system</b> that became the platform’s front gate — tenant-aware sessions, centralized access control.',
-      facts: [['200', 'users'], ['~25', 'tenants'], ['1', 'login']],
-      tags: ['React', 'Node.js', 'MSSQL', 'SSO · Caching', 'Agile sprints'],
+      text: 'Then, a harder problem: <b>200 people across ~25 companies</b>, each needing one secure door into everything. His answer became the platform’s front gate — a <b>multi-tenant SSO system</b> with tenant-aware sessions and centralized access control.',
+      stats: [['200', 'users'], ['~25', 'tenants'], ['1', 'login']],
+      tags: ['React', 'Node.js', 'MSSQL', 'SSO · Caching'],
     },
 
-    // ---- Chapter 02: The Paper Factory ----
+    /* III · The Paper Factory */
+    { ch: 2, text: 'May 2025. A manufacturing company in Chennai runs its entire production floor on <b>handwritten paper</b>. Thousands of work orders. Eight stations. Sixteen bills of resources. Zero visibility.' },
     {
       ch: 2,
-      text: 'May 2025. A hair-manufacturing company in Chennai runs its entire production floor on <b>handwritten paper</b>. Thousands of work orders. Sixteen bills of resources. Eight stations. Zero visibility.',
-    },
-    {
-      ch: 2,
-      text: 'His mission: turn the paper into software. Working directly with company leadership, he architected an <b>8-module production planning system</b> and owned it from whiteboard to deployment. Press the button — do what he did.',
+      text: 'His brief: turn the paper into software. Working directly with company leadership, he architected an <b>8-module production planning system</b> and carried it from whiteboard to deployment.',
       widget: 'digitize',
     },
     {
       ch: 2,
-      text: 'Today <b>30 people use it every day</b>. Every work order has a live timeline from raw material to dispatch. Role-based access for every station. Nobody writes production plans by hand anymore.',
-      facts: [['9,000+', 'work orders'], ['4,500+', 'SKUs'], ['8', 'modules · RBAC'], ['30', 'daily users']],
+      text: 'Today, <b>30 people</b> run their day inside it. Every work order carries a live timeline from raw material to dispatch. The paper is gone.',
+      stats: [['9,000+', 'work orders'], ['4,500+', 'SKUs'], ['8', 'modules · RBAC'], ['30', 'daily users']],
       tags: ['React', 'Node.js', 'Express', 'PostgreSQL'],
     },
 
-    // ---- Chapter 03: The Machines Learn ----
-    {
-      ch: 3,
-      text: 'Somewhere along the way, the tools themselves changed. Language models arrived — and Rishi started shipping <b>AI systems that run in production</b>, not demos. Three of them are on duty right now.',
-    },
+    /* IV · The Machines Learn */
+    { ch: 3, text: 'Then the tools themselves changed. Language models arrived — and Rishi began shipping <b>AI that works in production</b>, not in demos. Three systems are on duty right now.' },
     {
       ch: 3,
       choice: {
         prompt: 'Which one do you want to meet first?',
         options: [
-          { label: '🤖 The chatbot that answers customers', order: ['rag', 'content', 'seo'] },
-          { label: '🎨 The agent that creates content', order: ['content', 'rag', 'seo'] },
-          { label: '📈 The analyst that writes reports', order: ['seo', 'rag', 'content'] },
+          { label: 'The chatbot that answers customers', order: ['rag', 'content', 'seo'] },
+          { label: 'The agent that creates content', order: ['content', 'rag', 'seo'] },
+          { label: 'The analyst that writes reports', order: ['seo', 'rag', 'content'] },
         ],
       },
     },
-    // (the three agent beats are spliced in here, in the chosen order)
 
-    // ---- Chapter 04: Side Quests ----
+    /* V · After Hours */
     {
       ch: 4,
-      text: 'What does he build when nobody’s asking? <b>Side quests.</b> Three of them — open each one up.',
+      text: 'And when nobody is asking? He builds anyway. Three projects, made after hours — open them.',
       widget: 'labs',
     },
     {
       ch: 4,
-      text: 'And yes — one of those side quests is literally <b>a game platform</b>. Certifications collected along the way: Generative AI for Web Developers, Agent Development, OS Administration & Security, Technical Support Fundamentals.',
-      facts: [['3', 'independent projects'], ['4', 'certifications'], ['∞', 'curiosity']],
+      text: 'One of them is, quite literally, a multiplayer game platform — he builds play, too. Collected along the way: four certifications, from generative AI to systems administration.',
+      stats: [['3', 'independent projects'], ['4', 'certifications'], ['∞', 'curiosity']],
     },
 
-    // ---- Chapter 05: The Arsenal ----
+    /* VI · The Craft */
     {
       ch: 5,
-      text: 'Every chapter so far was built with the same toolkit — <b>full stack by training, AI-native by obsession</b>. Open the arsenal and look around.',
+      text: 'Six chapters, one craft: <b>full stack by training, AI-native by obsession</b>. This is the toolkit behind everything you just read.',
       widget: 'stack',
     },
 
-    // ---- Epilogue ----
+    /* VII · The Unwritten Chapter */
     {
       ch: 6,
-      text: 'That’s the story so far: <b>~4.5 years</b>, two companies, a paper factory digitized, three AI systems answering to no one, and a stack that keeps growing.',
-      facts: [['~4.5', 'years shipping'], ['35%', 'faster APIs'], ['9,000+', 'work orders'], ['3', 'AI systems live']],
+      text: 'The story so far: <b>~4.5 years</b>. Two companies. A paper factory digitized. Three AI systems working unsupervised. A toolkit that keeps growing.',
+      stats: [['~4.5', 'years shipping'], ['35%', 'faster APIs'], ['9,000+', 'work orders'], ['3', 'AI systems live']],
     },
-    {
-      ch: 6,
-      text: 'The next chapter is <b>unwritten</b>. It could start with a message.',
-      end: true,
-    },
+    { ch: 6, text: 'The next chapter is <b>unwritten</b>.<br/>It could start with a message.', end: true },
   ];
 }
 
@@ -172,7 +132,7 @@ class Sfx {
     } catch { this.ctx = null; }
     return !!this.ctx;
   }
-  tone(freq, dur = 0.09, type = 'sine', gain = 0.045, slide = 0) {
+  tone(freq, dur = 0.09, type = 'sine', gain = 0.04, slide = 0) {
     if (this.muted || !this._ensure()) return;
     try {
       if (this.ctx.state === 'suspended') this.ctx.resume();
@@ -189,42 +149,15 @@ class Sfx {
       osc.stop(t0 + dur + 0.02);
     } catch { /* best-effort */ }
   }
-  ui() { this.tone(660, 0.05, 'sine', 0.028); }
-  next() { this.tone(520, 0.07, 'triangle', 0.035, 160); }
-  whoosh() { this.tone(220, 0.5, 'sawtooth', 0.02, -140); this.tone(880, 0.45, 'sine', 0.015, -500); }
-  chapter() { this.tone(392, 0.28, 'sine', 0.05, 260); this.tone(587, 0.32, 'triangle', 0.035, 200); }
-  success() { this.tone(784, 0.12, 'triangle', 0.05, 260); }
-  finish() { [523, 659, 784, 1046].forEach((f, i) => setTimeout(() => this.tone(f, 0.22, 'triangle', 0.05), i * 110)); }
+  ui() { this.tone(660, 0.05, 'sine', 0.022); }
+  next() { this.tone(520, 0.06, 'sine', 0.025, 120); }
+  swell() { this.tone(196, 0.9, 'sine', 0.035, 100); this.tone(294, 0.9, 'sine', 0.02, 60); }
+  success() { this.tone(784, 0.12, 'triangle', 0.04, 220); }
+  finish() { [392, 494, 587, 784].forEach((f, i) => setTimeout(() => this.tone(f, 0.3, 'sine', 0.04), i * 140)); }
 }
 
 /* ======================= CANVAS HELPERS ======================= */
-function makeTextSprite(text, { size = 64, color = '#6ee7ff', weight = 600, worldScale = 0.018 } = {}) {
-  const pad = 36;
-  const measure = document.createElement('canvas').getContext('2d');
-  measure.font = `${weight} ${size}px 'Space Grotesk', sans-serif`;
-  const w = Math.ceil(measure.measureText(text).width) + pad * 2;
-  const h = size + pad * 2;
-  const canvas = document.createElement('canvas');
-  canvas.width = w;
-  canvas.height = h;
-  const ctx = canvas.getContext('2d');
-  ctx.font = `${weight} ${size}px 'Space Grotesk', sans-serif`;
-  ctx.textBaseline = 'middle';
-  ctx.textAlign = 'center';
-  ctx.shadowColor = color;
-  ctx.shadowBlur = 26;
-  ctx.fillStyle = color;
-  ctx.fillText(text, w / 2, h / 2 + 2);
-  const tex = new THREE.CanvasTexture(canvas);
-  tex.anisotropy = 4;
-  const spr = new THREE.Sprite(
-    new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false })
-  );
-  spr.scale.set(w * worldScale, h * worldScale, 1);
-  return spr;
-}
-
-function makeGlowSprite(color = '#6ee7ff', scale = 6) {
+function makeGlowSprite(color = '#6ee7ff', scale = 6, opacity = 1) {
   const c = document.createElement('canvas');
   c.width = c.height = 128;
   const ctx = c.getContext('2d');
@@ -238,6 +171,7 @@ function makeGlowSprite(color = '#6ee7ff', scale = 6) {
     new THREE.SpriteMaterial({
       map: new THREE.CanvasTexture(c),
       transparent: true,
+      opacity,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     })
@@ -246,59 +180,44 @@ function makeGlowSprite(color = '#6ee7ff', scale = 6) {
   return spr;
 }
 
-function makeGridTexture() {
-  const c = document.createElement('canvas');
-  c.width = c.height = 128;
-  const ctx = c.getContext('2d');
-  ctx.strokeStyle = 'rgba(110, 231, 255, 0.34)';
-  ctx.lineWidth = 2;
-  ctx.strokeRect(0.5, 0.5, 127, 127);
-  const tex = new THREE.CanvasTexture(c);
-  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-  tex.repeat.set(90, 90);
-  return tex;
-}
-
-/* ======================= ROAD SHADER ======================= */
-const roadVertex = /* glsl */ `
-  varying vec2 vUv;
-  void main() {
-    vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`;
-const roadFragment = /* glsl */ `
+/* ======================= WAVE FLOOR SHADER ======================= */
+const floorVertex = /* glsl */ `
   uniform float uTime;
-  uniform float uBoost;
-  varying vec2 vUv;
+  varying float vElev;
   void main() {
-    vec3 base = vec3(0.028, 0.028, 0.055);
-    vec3 accent = vec3(0.431, 0.906, 1.0);
-    vec3 accent2 = vec3(0.541, 0.49, 1.0);
-    float e = min(vUv.x, 1.0 - vUv.x);
-    float edge = smoothstep(0.06, 0.0, e);
-    float edgeSoft = smoothstep(0.16, 0.0, e) * 0.28;
-    float center = smoothstep(0.008, 0.0, abs(vUv.x - 0.5));
-    float dash = step(0.45, fract(vUv.y * 1.4));
-    float flowSpeed = 0.6 + uBoost * 6.0;
-    float flow = smoothstep(0.1, 0.0, abs(fract(vUv.y * 0.35 - uTime * flowSpeed * 0.08) - 0.5)) * (0.08 + uBoost * 0.3);
-    vec3 col = base + accent * (edge * 1.25 + edgeSoft) + accent2 * center * dash * 0.85 + accent * flow;
-    gl_FragColor = vec4(col, 0.94);
+    vec3 pos = position;
+    float t = uTime * 0.4;
+    float e = sin(pos.x * 0.28 + t) * 0.7
+            + sin(pos.z * 0.22 + t * 1.4) * 0.6
+            + sin((pos.x + pos.z) * 0.11 + t * 0.7) * 0.5;
+    pos.y += e;
+    vElev = e;
+    vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+    gl_Position = projectionMatrix * mv;
+    gl_PointSize = 2.4 * (26.0 / -mv.z);
+  }
+`;
+const floorFragment = /* glsl */ `
+  varying float vElev;
+  void main() {
+    vec2 uv = gl_PointCoord - 0.5;
+    float a = smoothstep(0.5, 0.1, length(uv));
+    float h = clamp(vElev * 0.4 + 0.5, 0.0, 1.0);
+    vec3 col = mix(vec3(0.16, 0.14, 0.32), vec3(0.43, 0.9, 1.0), pow(h, 1.6));
+    gl_FragColor = vec4(col, a * (0.16 + h * 0.4));
   }
 `;
 
-/* ======================= INTERACTIVE WIDGETS =======================
-   Each widget is a self-contained interactive moment built from the
-   portfolio's real numbers. They render into the story card. */
+/* ======================= INTERACTIVE MOMENTS =======================
+   Quiet, hands-on beats built from the résumé's real numbers. */
 const WIDGETS = {
-  /* Ch.01 — run the API optimization */
   latency(root, game) {
     root.innerHTML = `
       <div class="w-latency">
         <div class="w-latency__row"><span>Before</span><div class="w-bar"><i class="w-bar__before" style="width:100%">480 ms</i></div></div>
         <div class="w-latency__row"><span>After</span><div class="w-bar"><i class="w-bar__after" style="width:2%"></i></div></div>
-        <button type="button" class="w-btn">▶ Run the optimization</button>
-        <span class="w-result" hidden>−35% response time · caching + query optimization ✓</span>
+        <button type="button" class="w-btn">Run the optimization</button>
+        <span class="w-result" hidden>−35% response time · caching + query optimization</span>
       </div>`;
     const btn = root.querySelector('.w-btn');
     const after = root.querySelector('.w-bar__after');
@@ -317,17 +236,14 @@ const WIDGETS = {
     });
   },
 
-  /* Ch.02 — digitize the paper factory */
   digitize(root, game) {
     const CELLS = 48;
     root.innerHTML = `
       <div class="w-digitize">
-        <div class="w-digitize__top">
-          <span class="w-digitize__count"><b>0</b> work orders digitized</span>
-        </div>
+        <span class="w-digitize__count"><b>0</b> work orders digitized</span>
         <div class="w-digitize__grid">${'<i></i>'.repeat(CELLS)}</div>
-        <button type="button" class="w-btn">▶ Digitize the factory</button>
-        <span class="w-result" hidden>Paper → PostgreSQL. A live timeline for every order ✓</span>
+        <button type="button" class="w-btn">Digitize the factory</button>
+        <span class="w-result" hidden>Paper → PostgreSQL. A live timeline for every order</span>
       </div>`;
     const btn = root.querySelector('.w-btn');
     const count = root.querySelector('.w-digitize__count b');
@@ -339,10 +255,10 @@ const WIDGETS = {
       game.sfx.ui();
       cells.forEach((c, i) => setTimeout(() => {
         c.classList.add('is-on');
-        if (i % 8 === 0) game.sfx.tone(700 + i * 14, 0.04, 'sine', 0.014);
-      }, 240 + i * 28));
+        if (i % 8 === 0) game.sfx.tone(700 + i * 14, 0.04, 'sine', 0.012);
+      }, 240 + i * 26));
       const t0 = performance.now();
-      const dur = 240 + CELLS * 28 + 200;
+      const dur = 240 + CELLS * 26 + 200;
       const step = (now) => {
         const t = Math.min((now - t0) / dur, 1);
         count.textContent = Math.round((1 - Math.pow(1 - t, 3)) * 9000).toLocaleString('en-US') + (t === 1 ? '+' : '');
@@ -358,7 +274,6 @@ const WIDGETS = {
     });
   },
 
-  /* Ch.03 — interview the RAG chatbot */
   chat(root, game) {
     const QA = [
       ['What exactly do you do?', 'I answer questions over complex internal data — grounded with vector search and LangChain, so I cite what’s true instead of guessing. RAG, not vibes.'],
@@ -391,7 +306,6 @@ const WIDGETS = {
     });
   },
 
-  /* Ch.03 — fire the content agent */
   platforms(root, game) {
     const P = ['Instagram', 'Facebook', 'X / Twitter', 'LinkedIn', 'YouTube', 'Pinterest', 'Threads', 'Blog'];
     root.innerHTML = `
@@ -400,9 +314,9 @@ const WIDGETS = {
           <span class="w-platforms__label">PROMPT</span>
           <span class="w-platforms__text">“Post about today’s new product drop.”</span>
         </div>
-        <button type="button" class="w-btn">▶ Send the one prompt</button>
+        <button type="button" class="w-btn">Send the one prompt</button>
         <div class="w-platforms__grid">${P.map((p) => `<span>${p}</span>`).join('')}</div>
-        <span class="w-result" hidden>8 platform-native posts — images, copy, captions, hashtags. 0 manual steps ✓</span>
+        <span class="w-result" hidden>8 platform-native posts — images, copy, captions, hashtags. 0 manual steps</span>
       </div>`;
     const btn = root.querySelector('.w-btn');
     const chips = [...root.querySelectorAll('.w-platforms__grid span')];
@@ -413,17 +327,16 @@ const WIDGETS = {
       game.sfx.ui();
       chips.forEach((c, i) => setTimeout(() => {
         c.classList.add('is-done');
-        game.sfx.tone(600 + i * 60, 0.06, 'triangle', 0.02);
+        game.sfx.tone(600 + i * 60, 0.06, 'triangle', 0.016);
         if (i === chips.length - 1) {
           btn.textContent = 'Posted everywhere ✓';
           result.hidden = false;
           game.sfx.success();
         }
-      }, 350 + i * 260));
+      }, 350 + i * 240));
     });
   },
 
-  /* Ch.03 — let the SEO agent write the weekly report */
   seo(root, game) {
     const LINES = [
       'Connecting to Google Search Console… ✓',
@@ -435,7 +348,7 @@ const WIDGETS = {
     root.innerHTML = `
       <div class="w-seo">
         <div class="w-seo__term"></div>
-        <button type="button" class="w-btn">▶ Generate the weekly report</button>
+        <button type="button" class="w-btn">Generate the weekly report</button>
         <div class="w-seo__stat" hidden><b>15 hrs</b><span>→</span><b>30 min</b><em>of weekly reporting</em></div>
       </div>`;
     const btn = root.querySelector('.w-btn');
@@ -449,27 +362,26 @@ const WIDGETS = {
         const row = document.createElement('span');
         row.textContent = l;
         term.appendChild(row);
-        game.sfx.tone(500 + i * 90, 0.05, 'sine', 0.018);
+        game.sfx.tone(500 + i * 90, 0.05, 'sine', 0.014);
         if (i === LINES.length - 1) {
           btn.textContent = 'Report delivered ✓';
           stat.hidden = false;
           game.sfx.success();
         }
-      }, 300 + i * 480));
+      }, 300 + i * 460));
     });
   },
 
-  /* Ch.04 — open the side quests */
   labs(root, game) {
     const L = [
-      ['🩺', 'AI Medical Report Scanner', 'Reads medical lab reports and explains your real health status in plain language — OCR / vision, LLM reasoning and a medical knowledge layer. Designed education-first to stay outside medical-device classification.'],
-      ['🥗', 'Food-Image Nutrition Analyzer', 'A photo of a meal becomes a full macro and nutrient breakdown — a vision LLM paired with a nutrition database, capturing structured intake to personalize insights.'],
-      ['🎲', 'Fun Friday Arena', 'A real-time multiplayer gaming platform for internal teams — UNO, chess and more — with live state sync and concurrent sessions over WebSockets.'],
+      ['AI Medical Report Scanner', 'Reads medical lab reports and explains your real health status in plain language — OCR / vision, LLM reasoning and a medical knowledge layer. Designed education-first to stay outside medical-device classification.'],
+      ['Food-Image Nutrition Analyzer', 'A photo of a meal becomes a full macro and nutrient breakdown — a vision LLM paired with a nutrition database, capturing structured intake to personalize insights.'],
+      ['Fun Friday Arena', 'A real-time multiplayer platform for internal teams — UNO, chess and more — with live state sync and concurrent sessions over WebSockets.'],
     ];
     root.innerHTML = `
-      <div class="w-labs">${L.map(([e, name, desc], i) => `
+      <div class="w-labs">${L.map(([name, desc], i) => `
         <button type="button" class="w-lab" data-i="${i}">
-          <span class="w-lab__head"><span class="w-lab__name">${e} ${name}</span><span class="w-lab__more">+</span></span>
+          <span class="w-lab__head"><span class="w-lab__name">${name}</span><span class="w-lab__more">+</span></span>
           <span class="w-lab__desc">${desc}</span>
         </button>`).join('')}
       </div>`;
@@ -482,7 +394,6 @@ const WIDGETS = {
     });
   },
 
-  /* Ch.05 — browse the arsenal */
   stack(root, game) {
     const S = [
       ['Languages', ['JavaScript', 'Python', 'SQL']],
@@ -510,21 +421,23 @@ const WIDGETS = {
   },
 };
 
-/* ============================ THE GAME ============================ */
+/* ============================ STORY MODE ============================ */
 export class PortfolioGame {
   constructor({ onExit } = {}) {
     this.onExit = onExit || (() => {});
     this.sfx = new Sfx();
-    this.state = 'title'; // title | travel | story | end
+    this.state = 'title'; // title | transition | scene | end
     this.disposed = false;
 
     this.script = buildScript();
     this.stepIndex = -1;
     this.currentCh = -1;
-    this.playerU = 0.015;
-    this.boost = 0;
+    this.camZ = 30;
     this.mouse = { x: 0, y: 0 };
+    this._reveal = null;
     this._typing = null;
+    this._tcTimers = [];
+    this._wheelLock = 0;
 
     this._buildDom();
     this._buildScene();
@@ -532,62 +445,65 @@ export class PortfolioGame {
     this.renderer.setAnimationLoop(() => this._tick());
   }
 
+  static chZ(i) { return -i * 46; }
+
   /* ---------------- DOM ---------------- */
   _buildDom() {
     const root = document.createElement('div');
     root.className = 'game';
     root.innerHTML = `
       <canvas class="game__canvas"></canvas>
-      <div class="game__vignette" aria-hidden="true"></div>
+      <div class="game__grade" aria-hidden="true"></div>
+      <div class="game__bar game__bar--top" aria-hidden="true"></div>
+      <div class="game__bar game__bar--bottom" aria-hidden="true"></div>
 
-      <div class="game__hud">
-        <button class="game__exit" type="button" title="Exit story (Esc)">✕ <span>Exit</span></button>
-        <div class="game__track">
-          <div class="game__track-fill"></div>
-          <div class="game__track-dots"></div>
-        </div>
-        <button class="game__mute" type="button" title="Toggle sound">♪</button>
+      <button class="game__exit" type="button" title="Leave the story (Esc)">✕ <span>Exit story</span></button>
+      <button class="game__mute" type="button" title="Toggle sound">♪</button>
+
+      <div class="scene" hidden>
+        <div class="scene__kicker"></div>
+        <div class="scene__text"></div>
+        <div class="scene__stats"></div>
+        <div class="scene__widget"></div>
+        <ul class="scene__tags"></ul>
+        <div class="scene__choices" hidden></div>
       </div>
 
-      <div class="game__chapter" aria-live="polite"></div>
-
-      <div class="story" hidden>
-        <div class="story__kicker"></div>
-        <div class="story__text"></div>
-        <div class="story__widget"></div>
-        <div class="story__facts"></div>
-        <ul class="story__tags"></ul>
-        <div class="story__choices" hidden></div>
-        <div class="story__nav">
-          <button class="story__back" type="button" title="Previous">‹ Back</button>
-          <button class="story__next" type="button">Continue ▸</button>
+      <div class="game__nav">
+        <button class="game__nav-prev" type="button" title="Previous (←)">‹</button>
+        <div class="game__nav-mid">
+          <span class="game__nav-label"></span>
+          <div class="game__nav-ticks"></div>
         </div>
+        <button class="game__nav-next" type="button" title="Continue (Enter)">›</button>
       </div>
 
       <div class="game__hint">
-        <span class="game__hint-desktop"><kbd>Enter</kbd> continue · <kbd>←</kbd> back · chapter dots jump · <kbd>Esc</kbd> exit</span>
-        <span class="game__hint-touch">Tap Continue · chapter dots jump around the story</span>
+        <span class="game__hint-desktop">Click, scroll or <kbd>Enter</kbd> to continue · <kbd>←</kbd> back · <kbd>Esc</kbd> leave</span>
+        <span class="game__hint-touch">Tap or swipe up to continue</span>
+      </div>
+
+      <div class="tc" aria-hidden="true">
+        <span class="tc__numeral"></span>
+        <span class="tc__name"></span>
+        <span class="tc__dates"></span>
       </div>
 
       <div class="game__screen game__screen--intro">
-        <p class="game__screen-kicker">An interactive story</p>
+        <p class="game__screen-kicker">Rishi Vendhan K K</p>
         <h1 class="game__screen-title">THE PATHWAY</h1>
         <p class="game__screen-sub">
-          The career of <b>Rishi Vendhan K K</b>, told as a journey — seven chapters,
-          from mechanical engineering to production AI systems. No reflexes needed:
-          read at your pace, and when the story hands you the controls, press the buttons
-          he pressed. <em>≈ 3 minutes, or as long as you like.</em>
+          A cinematic story in seven chapters — how a mechanical engineer became
+          the person you call when software has to actually ship. It reads at your
+          pace, and when the story offers you its moments, they’re yours to take.
+          <em>≈ 3 minutes.</em>
         </p>
-        <button class="game__start" type="button">▶ &nbsp;Begin the story</button>
-        <p class="game__screen-keys">
-          <span>Prologue · Origin</span><span>→</span><span>Ch.01 · First Contact</span><span>→</span>
-          <span>Ch.02 · The Paper Factory</span><span>→</span><span>Ch.03 · The Machines Learn</span><span>→</span>
-          <span>… → Epilogue</span>
-        </p>
+        <button class="game__start" type="button">Begin</button>
+        <p class="game__screen-keys">I · Origin — II · First Contact — III · The Paper Factory — IV · The Machines Learn — V · After Hours — VI · The Craft — VII · The Unwritten Chapter</p>
       </div>
 
       <div class="game__screen game__screen--end" hidden>
-        <p class="game__screen-kicker">Epilogue · Open to work</p>
+        <p class="game__screen-kicker">VII · Open to work</p>
         <h1 class="game__screen-title">THE NEXT CHAPTER<br/>IS <span class="game__screen-accent">UNWRITTEN</span></h1>
         <p class="game__screen-sub">Full-stack &amp; AI engineering roles · Chennai, India · UTC+5:30</p>
         <div class="game__end-links">
@@ -606,154 +522,198 @@ export class PortfolioGame {
     this.root = root;
     this.canvas = root.querySelector('.game__canvas');
     this.el = {
-      trackFill: root.querySelector('.game__track-fill'),
-      trackDots: root.querySelector('.game__track-dots'),
-      chapter: root.querySelector('.game__chapter'),
-      story: root.querySelector('.story'),
-      kicker: root.querySelector('.story__kicker'),
-      text: root.querySelector('.story__text'),
-      widget: root.querySelector('.story__widget'),
-      facts: root.querySelector('.story__facts'),
-      tags: root.querySelector('.story__tags'),
-      choices: root.querySelector('.story__choices'),
-      back: root.querySelector('.story__back'),
-      next: root.querySelector('.story__next'),
+      scene: root.querySelector('.scene'),
+      kicker: root.querySelector('.scene__kicker'),
+      text: root.querySelector('.scene__text'),
+      stats: root.querySelector('.scene__stats'),
+      widget: root.querySelector('.scene__widget'),
+      tags: root.querySelector('.scene__tags'),
+      choices: root.querySelector('.scene__choices'),
+      navLabel: root.querySelector('.game__nav-label'),
+      ticks: root.querySelector('.game__nav-ticks'),
+      prev: root.querySelector('.game__nav-prev'),
+      next: root.querySelector('.game__nav-next'),
+      tc: root.querySelector('.tc'),
+      tcNumeral: root.querySelector('.tc__numeral'),
+      tcName: root.querySelector('.tc__name'),
+      tcDates: root.querySelector('.tc__dates'),
       intro: root.querySelector('.game__screen--intro'),
       end: root.querySelector('.game__screen--end'),
       mute: root.querySelector('.game__mute'),
     };
 
-    // chapter dots — clickable jumps
     CHAPTERS.forEach((c, i) => {
       const d = document.createElement('button');
       d.type = 'button';
-      d.title = `${c.label} — ${c.title}`;
-      d.style.left = `${(i / (CHAPTERS.length - 1)) * 100}%`;
+      d.title = `${c.numeral} · ${c.title}`;
       d.addEventListener('click', () => this._jumpToChapter(i));
-      this.el.trackDots.appendChild(d);
+      this.el.ticks.appendChild(d);
     });
 
     requestAnimationFrame(() => root.classList.add('is-on'));
   }
 
-  /* ---------------- typewriter ----------------
-     Types HTML content by revealing its text nodes progressively,
-     so <b>/<em> styling appears in place. Click skips to the end. */
-  typeInto(el, html, done, cps = 2) {
-    this.skipTyping();
+  /* ---------------- word-by-word cinematic reveal ---------------- */
+  revealText(el, html, done) {
+    this.finishReveal();
+    el.classList.remove('is-done');
     el.innerHTML = html;
-    el.classList.add('is-typing');
     const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-    const nodes = [];
+    const textNodes = [];
     let n;
-    while ((n = walker.nextNode())) { nodes.push([n, n.nodeValue]); n.nodeValue = ''; }
-    let ni = 0, ci = 0;
-    const finish = () => {
-      nodes.slice(ni).forEach(([node, text], k) => { node.nodeValue = k === 0 ? text : text; });
-      nodes.forEach(([node, text]) => { node.nodeValue = text; });
-      el.classList.remove('is-typing');
-      this._typing = null;
-      done?.();
+    while ((n = walker.nextNode())) textNodes.push(n);
+    let idx = 0;
+    textNodes.forEach((node) => {
+      const frag = document.createDocumentFragment();
+      node.nodeValue.split(/(\s+)/).forEach((tok) => {
+        if (!tok) return;
+        if (/^\s+$/.test(tok)) { frag.appendChild(document.createTextNode(tok)); return; }
+        const s = document.createElement('span');
+        s.className = 'w';
+        s.style.animationDelay = `${idx * 36}ms`;
+        s.textContent = tok;
+        frag.appendChild(s);
+        idx++;
+      });
+      node.parentNode.replaceChild(frag, node);
+    });
+    const total = idx * 36 + 560;
+    this._reveal = {
+      el,
+      done,
+      t0: performance.now(),
+      total,
+      timer: setTimeout(() => { this._reveal = null; done?.(); }, total),
     };
-    const timer = setInterval(() => {
-      for (let k = 0; k < cps; k++) {
-        if (ni >= nodes.length) { clearInterval(timer); finish(); return; }
-        const [node, text] = nodes[ni];
-        ci++;
-        node.nodeValue = text.slice(0, ci);
-        if (ci >= text.length) { ni++; ci = 0; }
-      }
-    }, 14);
-    this._typing = { timer, finish };
   }
-  skipTyping() {
-    if (!this._typing) return false;
-    clearInterval(this._typing.timer);
-    this._typing.finish();
+  finishReveal() {
+    if (!this._reveal) return false;
+    clearTimeout(this._reveal.timer);
+    this._reveal.el.classList.add('is-done');
+    const d = this._reveal.done;
+    this._reveal = null;
+    d?.();
     return true;
   }
-  get isTyping() { return !!this._typing; }
+  get isRevealing() { return !!this._reveal; }
+
+  /* character typewriter — used inside the chat moment */
+  typeInto(el, text, done, cps = 2) {
+    if (this._typing) { clearInterval(this._typing.timer); this._typing.finish(); }
+    el.textContent = '';
+    let i = 0;
+    const finish = () => { el.textContent = text; this._typing = null; done?.(); };
+    const timer = setInterval(() => {
+      i += cps;
+      el.textContent = text.slice(0, i);
+      if (i >= text.length) { clearInterval(timer); finish(); }
+    }, 16);
+    this._typing = { timer, finish };
+  }
 
   /* ---------------- story engine ---------------- */
   _begin() {
     if (this.state !== 'title') return;
     this.el.intro.hidden = true;
     this.root.classList.add('is-reading');
-    this.sfx.chapter();
     this.stepIndex = -1;
     this._advance();
   }
 
   _advance() {
-    if (this.state === 'travel') return;
-    if (this.skipTyping()) return; // first press completes the line
+    if (this.state === 'transition') { this._skipTitleCard(); return; }
+    if (this._reveal) {
+      // mid-reveal: first press completes the line; but if the line is
+      // already essentially on screen, the press should just advance
+      const nearlyDone = performance.now() - this._reveal.t0 > this._reveal.total - 450;
+      this.finishReveal();
+      if (!nearlyDone) return;
+    }
     const step = this.script[this.stepIndex + 1];
     if (!step) return;
     this.stepIndex++;
-    if (step.end) { this._showStep(step); return; }
     this._renderStep(step);
   }
 
   _goBack() {
-    if (this.state === 'travel' || this.stepIndex <= 0) return;
-    this.skipTyping();
+    if (this.state !== 'scene' || this.stepIndex <= 0) return;
+    this.finishReveal();
     let i = this.stepIndex - 1;
-    while (i > 0 && this.script[i].choice?.consumed) i--; // skip resolved choices
+    while (i > 0 && this.script[i].choice?.consumed) i--;
     this.stepIndex = i;
     this._renderStep(this.script[i], true);
   }
 
   _renderStep(step, isBack = false) {
-    const ch = CHAPTERS[step.ch];
-    if (step.ch !== this.currentCh) {
+    if (step.ch !== this.currentCh && !isBack) {
       this.currentCh = step.ch;
-      this._travelTo(ch, () => this._showStep(step));
+      this._travelTo(CHAPTERS[step.ch], () => this._showStep(step));
     } else {
+      if (step.ch !== this.currentCh) {
+        this.currentCh = step.ch;
+        this._camTween = { from: this.camZ, to: PortfolioGame.chZ(step.ch) + 16, t0: performance.now(), dur: 900 };
+      }
       this._showStep(step);
     }
     if (!isBack) this.sfx.next();
     this._updateProgress();
   }
 
+  /* cinematic chapter transition: fade to black → title card → reveal */
   _travelTo(ch, then) {
-    this.state = 'travel';
-    this.el.story.hidden = true;
-    this.sfx.whoosh();
-    const from = this.playerU;
-    const to = ch.u;
-    const dist = Math.abs(to - from);
-    const dur = Math.max(900, Math.min(3000, dist * 16000));
-    const t0 = performance.now();
-    this._travel = { from, to, t0, dur, then, ch };
-    // chapter title flash
-    this.el.chapter.innerHTML = `<b>${ch.label}</b><span>${ch.title}</span>`;
-    this.el.chapter.classList.remove('is-flash');
-    void this.el.chapter.offsetWidth;
-    this.el.chapter.classList.add('is-flash');
+    this.state = 'transition';
+    this.el.scene.hidden = true;
+    this.sfx.swell();
+    this.el.tcNumeral.textContent = ch.numeral;
+    this.el.tcName.textContent = ch.title;
+    this.el.tcDates.textContent = ch.dates;
+    this.root.classList.add('is-tc');
+    this._pendingShow = then;
+    this._tcTimers.forEach(clearTimeout);
+    this._tcTimers = [
+      setTimeout(() => {
+        this._camTween = { from: this.camZ, to: PortfolioGame.chZ(CHAPTERS.indexOf(ch)) + 16, t0: performance.now(), dur: 1400 };
+      }, 350),
+      setTimeout(() => { this.root.classList.remove('is-tc'); }, 2450),
+      setTimeout(() => {
+        this.state = 'scene';
+        const cb = this._pendingShow;
+        this._pendingShow = null;
+        cb?.();
+      }, 2850),
+    ];
+  }
+  _skipTitleCard() {
+    if (this.state !== 'transition') return;
+    this._tcTimers.forEach(clearTimeout);
+    this._tcTimers = [];
+    this.camZ = PortfolioGame.chZ(this.currentCh) + 16;
+    this._camTween = null;
+    this.root.classList.remove('is-tc');
+    this.state = 'scene';
+    const cb = this._pendingShow;
+    this._pendingShow = null;
+    cb?.();
   }
 
   _showStep(step) {
-    this.state = 'story';
+    this.state = 'scene';
     const ch = CHAPTERS[step.ch];
-    this.el.kicker.textContent = ch.kicker;
+    this.el.kicker.textContent = `${ch.numeral} · ${ch.title}`;
 
-    // reset card sections
     this.el.widget.innerHTML = '';
-    this.el.facts.innerHTML = '';
+    this.el.stats.innerHTML = '';
     this.el.tags.innerHTML = '';
     this.el.choices.hidden = true;
     this.el.choices.innerHTML = '';
     this.el.next.hidden = false;
-    this.el.back.disabled = this.stepIndex <= 0;
+    this.el.prev.disabled = this.stepIndex <= 0;
 
-    if (step.end) {
-      this._finish();
-      return;
-    }
+    if (step.end) { this._finish(); return; }
 
     if (step.choice && !step.choice.consumed) {
       this.el.next.hidden = true;
-      this.typeInto(this.el.text, step.choice.prompt, () => {
+      this.revealText(this.el.text, step.choice.prompt, () => {
         this.el.choices.hidden = false;
         step.choice.options.forEach((opt) => {
           const b = document.createElement('button');
@@ -764,25 +724,39 @@ export class PortfolioGame {
         });
       });
     } else if (step.choice) {
-      // revisiting a consumed choice — just move along
       this._advance();
       return;
     } else {
-      this.typeInto(this.el.text, step.text, () => {
-        if (step.facts) {
-          this.el.facts.innerHTML = step.facts
-            .map(([b, l], i) => `<span style="animation-delay:${i * 90}ms"><b>${b}</b> ${l}</span>`)
-            .join('');
-        }
-        if (step.tags) {
-          this.el.tags.innerHTML = step.tags.map((t) => `<li>${t}</li>`).join('');
-        }
-        if (step.widget && WIDGETS[step.widget]) {
-          WIDGETS[step.widget](this.el.widget, this);
-        }
+      this.revealText(this.el.text, step.text, () => {
+        if (step.stats) this._renderStats(step.stats);
+        if (step.tags) this.el.tags.innerHTML = step.tags.map((t) => `<li>${t}</li>`).join('');
+        if (step.widget && WIDGETS[step.widget]) WIDGETS[step.widget](this.el.widget, this);
       });
     }
-    this.el.story.hidden = false;
+    this.el.scene.hidden = false;
+  }
+
+  /* large numbers that count up as they appear */
+  _renderStats(stats) {
+    this.el.stats.innerHTML = stats
+      .map(([v, l], i) => `<div class="scene__stat" style="animation-delay:${i * 120}ms"><b>${v}</b><span>${l}</span></div>`)
+      .join('');
+    this.el.stats.querySelectorAll('b').forEach((b) => {
+      const raw = b.textContent;
+      const m = raw.match(/^([~≈]?)([\d,]+(?:\.\d+)?)(.*)$/);
+      if (!m) return;
+      const target = parseFloat(m[2].replace(/,/g, ''));
+      const dec = m[2].includes('.') ? 1 : 0;
+      const t0 = performance.now();
+      const dur = 1100;
+      const step = (now) => {
+        const t = Math.min((now - t0) / dur, 1);
+        const e = 1 - Math.pow(1 - t, 3);
+        b.textContent = m[1] + (dec ? (target * e).toFixed(1) : Math.round(target * e).toLocaleString('en-US')) + m[3];
+        if (t < 1 && !this.disposed) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
   }
 
   _resolveChoice(step, opt) {
@@ -790,7 +764,7 @@ export class PortfolioGame {
     const idx = this.script.indexOf(step);
     const beats = opt.order.map((k) => ({ ch: step.ch, ...AGENT_BEATS[k] }));
     this.script.splice(idx + 1, 0, ...beats);
-    this.sfx.chapter();
+    this.sfx.success();
     this._advance();
   }
 
@@ -805,27 +779,26 @@ export class PortfolioGame {
   }
 
   _jumpToChapter(chIdx) {
-    if (this.state === 'title' || this.state === 'end' || this.disposed) return;
+    if (this.state === 'title' || this.disposed) return;
+    if (this.state === 'end') {
+      this.el.end.classList.remove('is-open');
+      this.el.end.hidden = true;
+    }
     this._resolvePendingChoices();
     const target = this.script.findIndex((s) => s.ch === chIdx && !s.choice);
     if (target === -1) return;
-    this.skipTyping();
+    this.finishReveal();
     this.stepIndex = target;
-    this.currentCh = -2; // force travel
+    this.currentCh = chIdx;
     this.sfx.ui();
-    const step = this.script[target];
-    this.currentCh = step.ch;
-    this._travelTo(CHAPTERS[chIdx], () => this._showStep(step));
+    this._travelTo(CHAPTERS[chIdx], () => this._showStep(this.script[target]));
     this._updateProgress();
   }
 
   _updateProgress() {
-    const chSteps = this.script.filter((s) => s.ch === this.currentCh && !s.choice);
-    const within = Math.max(0, chSteps.indexOf(this.script[this.stepIndex]));
-    const frac = chSteps.length > 1 ? within / (chSteps.length - 1) : 1;
-    const p = (Math.max(this.currentCh, 0) + frac * 0.9) / (CHAPTERS.length - 1);
-    this.el.trackFill.style.width = `${Math.min(p * 100, 100).toFixed(1)}%`;
-    [...this.el.trackDots.children].forEach((d, i) => {
+    const ch = CHAPTERS[Math.max(this.currentCh, 0)];
+    this.el.navLabel.textContent = `${ch.numeral} · ${ch.title}`;
+    [...this.el.ticks.children].forEach((d, i) => {
       d.classList.toggle('is-done', i < this.currentCh);
       d.classList.toggle('is-here', i === this.currentCh);
     });
@@ -833,9 +806,8 @@ export class PortfolioGame {
 
   _finish() {
     this.state = 'end';
-    this.el.story.hidden = true;
-    this.el.trackFill.style.width = '100%';
-    [...this.el.trackDots.children].forEach((d) => d.classList.add('is-done'));
+    this.el.scene.hidden = true;
+    [...this.el.ticks.children].forEach((d) => d.classList.add('is-done'));
     this.el.end.hidden = false;
     requestAnimationFrame(() => this.el.end.classList.add('is-open'));
     this.sfx.finish();
@@ -848,401 +820,240 @@ export class PortfolioGame {
     this.script = buildScript();
     this.stepIndex = -1;
     this.currentCh = -1;
-    this.state = 'story';
-    this.sfx.chapter();
+    this.state = 'scene';
     this._advance();
   }
 
-  /* 3D flourish hook: the factory wall turns from paper to data */
+  /* the paper wall in the scene turns to light when the reader digitizes */
   fxFactory() {
-    if (!this._factoryCells) return;
-    this._factoryCells.forEach((m, i) => {
+    if (!this._paperCells) return;
+    this._paperCells.forEach((m, i) => {
       setTimeout(() => {
         m.material.color.setHex(ACCENT);
-        m.material.opacity = 0.85;
+        m.material.opacity = 0.55;
       }, i * 40);
     });
   }
 
-  /* ---------------- 3D scene ---------------- */
+  /* ---------------- 3D world ---------------- */
   _buildScene() {
     this.scene = new THREE.Scene();
-    this.scene.fog = new THREE.FogExp2(BG, 0.0135);
-    this.camera = new THREE.PerspectiveCamera(62, innerWidth / innerHeight, 0.1, 700);
+    this.scene.fog = new THREE.FogExp2(BG, 0.016);
+    this.camera = new THREE.PerspectiveCamera(56, innerWidth / innerHeight, 0.1, 600);
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true, powerPreference: 'high-performance' });
     this.renderer.setClearColor(BG, 1);
     this.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
     this.renderer.setSize(innerWidth, innerHeight);
     this.clock = new THREE.Clock();
 
-    this._buildPath();
-    this._buildRoad();
-    this._buildEnvironment();
-    this._buildPortals();
-    this._buildSetPieces();
-    this._buildShip();
+    this._buildFloor();
+    this._buildSky();
+    this._buildMotifs();
   }
 
-  _buildPath() {
-    const pts = [];
-    const N = 15;
-    for (let i = 0; i < N; i++) {
-      const x = i === 0 ? 0 : Math.sin(i * 0.95) * 22;
-      const y = Math.sin(i * 0.55) * 2.2;
-      pts.push(new THREE.Vector3(x, y, -i * 52));
-    }
-    this.curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.5);
-    this.curveLen = this.curve.getLength();
-  }
-
-  _onPath(u, lat = 0, lift = 0, out = new THREE.Vector3()) {
-    const uu = THREE.MathUtils.clamp(u, 0, 1);
-    const p = this.curve.getPointAt(uu);
-    const t = this.curve.getTangentAt(uu);
-    const n = this._tmpN.set(-t.z, 0, t.x).normalize();
-    out.copy(p).addScaledVector(n, lat);
-    out.y = p.y + lift;
-    return out;
-  }
-  get _tmpN() { return this.__tmpN || (this.__tmpN = new THREE.Vector3()); }
-
-  _buildRoad() {
-    const SEGS = 700;
-    const HALF = 3.4;
-    const pos = new Float32Array((SEGS + 1) * 2 * 3);
-    const uv = new Float32Array((SEGS + 1) * 2 * 2);
-    const idx = [];
-    const p = new THREE.Vector3();
-    const n = new THREE.Vector3();
-    for (let i = 0; i <= SEGS; i++) {
-      const u = i / SEGS;
-      this.curve.getPointAt(u, p);
-      const t = this.curve.getTangentAt(u);
-      n.set(-t.z, 0, t.x).normalize();
-      const v = (u * this.curveLen) / 8;
-      pos.set([p.x + n.x * HALF, p.y, p.z + n.z * HALF, p.x - n.x * HALF, p.y, p.z - n.z * HALF], i * 6);
-      uv.set([0, v, 1, v], i * 4);
-      if (i < SEGS) {
-        const a = i * 2;
-        idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2);
+  _buildFloor() {
+    const cols = 150, rows = 100;
+    const count = cols * rows;
+    const pos = new Float32Array(count * 3);
+    let i = 0;
+    for (let x = 0; x < cols; x++) {
+      for (let z = 0; z < rows; z++) {
+        pos[i * 3] = (x / (cols - 1) - 0.5) * 130;
+        pos[i * 3 + 1] = 0;
+        pos[i * 3 + 2] = 45 - (z / (rows - 1)) * 420;
+        i++;
       }
     }
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
-    geo.setIndex(idx);
-    this.roadUniforms = { uTime: { value: 0 }, uBoost: { value: 0 } };
+    this.floorUniforms = { uTime: { value: 0 } };
     const mat = new THREE.ShaderMaterial({
-      vertexShader: roadVertex,
-      fragmentShader: roadFragment,
-      uniforms: this.roadUniforms,
+      vertexShader: floorVertex,
+      fragmentShader: floorFragment,
+      uniforms: this.floorUniforms,
       transparent: true,
-      side: THREE.DoubleSide,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
     });
-    this.scene.add(new THREE.Mesh(geo, mat));
+    const pts = new THREE.Points(geo, mat);
+    pts.position.y = -6;
+    this.scene.add(pts);
   }
 
-  _buildEnvironment() {
-    const grid = new THREE.Mesh(
-      new THREE.PlaneGeometry(1600, 1600),
-      new THREE.MeshBasicMaterial({ map: makeGridTexture(), transparent: true, opacity: 0.3, depthWrite: false })
-    );
-    grid.rotation.x = -Math.PI / 2;
-    grid.position.set(0, -5.5, -360);
-    this.scene.add(grid);
-
-    const starCount = 1400;
+  _buildSky() {
+    // distant stars
+    const starCount = 1600;
     const sPos = new Float32Array(starCount * 3);
     for (let i = 0; i < starCount; i++) {
-      const r = 260 + Math.random() * 320;
+      const r = 180 + Math.random() * 260;
       const a = Math.random() * Math.PI * 2;
-      const h = Math.random() * 0.9 + 0.04;
+      const h = Math.random();
       sPos[i * 3] = Math.cos(a) * r;
-      sPos[i * 3 + 1] = h * 230 - 20;
-      sPos[i * 3 + 2] = Math.sin(a) * r - 340;
+      sPos[i * 3 + 1] = h * 180 - 30;
+      sPos[i * 3 + 2] = Math.sin(a) * r - 160;
     }
     const sGeo = new THREE.BufferGeometry();
     sGeo.setAttribute('position', new THREE.BufferAttribute(sPos, 3));
     this.scene.add(new THREE.Points(sGeo, new THREE.PointsMaterial({
-      color: 0xbfd8ff, size: 1.15, sizeAttenuation: true, transparent: true, opacity: 0.8, depthWrite: false,
+      color: 0xbfd8ff, size: 1.1, sizeAttenuation: true, transparent: true, opacity: 0.7, depthWrite: false,
     })));
 
-    const sun = makeGlowSprite('#8a7dff', 150);
-    sun.position.set(0, 26, -880);
+    // slow drifting dust, closer to camera
+    const dustCount = 260;
+    const dPos = new Float32Array(dustCount * 3);
+    for (let i = 0; i < dustCount; i++) {
+      dPos[i * 3] = (Math.random() - 0.5) * 90;
+      dPos[i * 3 + 1] = Math.random() * 24 - 4;
+      dPos[i * 3 + 2] = 40 - Math.random() * 400;
+    }
+    const dGeo = new THREE.BufferGeometry();
+    dGeo.setAttribute('position', new THREE.BufferAttribute(dPos, 3));
+    this.dust = new THREE.Points(dGeo, new THREE.PointsMaterial({
+      color: ACCENT, size: 0.5, sizeAttenuation: true, transparent: true, opacity: 0.5,
+      depthWrite: false, blending: THREE.AdditiveBlending,
+    }));
+    this.scene.add(this.dust);
+
+    // soft nebula glows along the journey
+    for (let i = 0; i < CHAPTERS.length; i++) {
+      const neb = makeGlowSprite(i % 2 ? '#8a7dff' : '#6ee7ff', 70 + (i % 3) * 30, 0.14);
+      neb.position.set((i % 2 ? 1 : -1) * (18 + (i % 3) * 8), 10 + (i % 3) * 5, PortfolioGame.chZ(i) - 40);
+      this.scene.add(neb);
+    }
+    // and a destination light at the far end
+    const sun = makeGlowSprite('#8a7dff', 160, 0.4);
+    sun.position.set(0, 20, PortfolioGame.chZ(CHAPTERS.length - 1) - 130);
     this.scene.add(sun);
-    const sunCore = makeGlowSprite('#6ee7ff', 70);
-    sunCore.position.set(0, 26, -878);
+    const sunCore = makeGlowSprite('#6ee7ff', 70, 0.5);
+    sunCore.position.copy(sun.position).z += 2;
     this.scene.add(sunCore);
-
-    this.debris = [];
-    const shapes = [
-      new THREE.IcosahedronGeometry(1.6, 0),
-      new THREE.OctahedronGeometry(1.9, 0),
-      new THREE.TetrahedronGeometry(1.7, 0),
-    ];
-    for (let i = 0; i < 40; i++) {
-      const m = new THREE.Mesh(
-        shapes[i % shapes.length],
-        new THREE.MeshBasicMaterial({
-          color: i % 3 === 0 ? ACCENT2 : ACCENT,
-          wireframe: true, transparent: true, opacity: 0.24,
-        })
-      );
-      const u = 0.04 + (i / 40) * 0.94;
-      const side = i % 2 === 0 ? 1 : -1;
-      this._onPath(u, side * (11 + Math.random() * 18), 2 + Math.random() * 9, m.position);
-      m.rotation.set(Math.random() * 3, Math.random() * 3, 0);
-      m.userData.spin = 0.1 + Math.random() * 0.3;
-      m.scale.setScalar(0.5 + Math.random() * 1.4);
-      this.scene.add(m);
-      this.debris.push(m);
-    }
   }
 
-  _buildPortals() {
-    // A portal ring on the road just before each chapter — you fly through it.
-    this.portals = [];
-    CHAPTERS.forEach((ch) => {
-      const group = new THREE.Group();
-      const ring = new THREE.Mesh(
-        new THREE.TorusGeometry(3.6, 0.09, 12, 72),
-        new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending, depthWrite: false })
-      );
-      const ring2 = new THREE.Mesh(
-        new THREE.TorusGeometry(4.05, 0.03, 8, 72),
-        new THREE.MeshBasicMaterial({ color: ACCENT2, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false })
-      );
-      group.add(ring, ring2);
-      const label = makeTextSprite(ch.title.toUpperCase(), { size: 68, color: '#eceaf6', worldScale: 0.015 });
-      label.position.y = 5.4;
-      group.add(label);
-      const sub = makeTextSprite(ch.label, { size: 36, color: '#6ee7ff', weight: 500, worldScale: 0.012 });
-      sub.position.y = 4.45;
-      group.add(sub);
-      const pu = Math.max(ch.u - 0.018, 0.02);
-      this._onPath(pu, 0, 3.0, group.position);
-      const ahead = this._onPath(Math.min(pu + 0.01, 1), 0, 3.0, new THREE.Vector3());
-      group.lookAt(ahead);
-      this.scene.add(group);
-      this.portals.push({ ring, ring2 });
-    });
-  }
-
-  /* Scene set pieces — one 3D vignette per chapter, placed around its stop */
-  _buildSetPieces() {
-    const addAt = (u, lat, lift, obj) => {
-      this._onPath(u, lat, lift, obj.position);
-      this.scene.add(obj);
-      return obj;
-    };
+  /* One quiet, abstract motif per chapter — set dressing, never louder
+     than the words. */
+  _buildMotifs() {
     this.animated = [];
+    const dim = (color, opacity = 0.2) =>
+      new THREE.MeshBasicMaterial({ color, wireframe: true, transparent: true, opacity });
 
-    // Prologue — interlocking wireframe gears + code sprite
+    // I — interlocking gears
     {
-      const u = CHAPTERS[0].u + 0.022;
-      const g1 = new THREE.Mesh(
-        new THREE.TorusGeometry(2.1, 0.32, 6, 9),
-        new THREE.MeshBasicMaterial({ color: ACCENT2, wireframe: true, transparent: true, opacity: 0.5 })
-      );
-      addAt(u, -7.5, 4.2, g1);
-      const g2 = new THREE.Mesh(
-        new THREE.TorusGeometry(1.3, 0.24, 6, 7),
-        new THREE.MeshBasicMaterial({ color: ACCENT, wireframe: true, transparent: true, opacity: 0.6 })
-      );
-      addAt(u + 0.006, -5.2, 6.1, g2);
-      this.animated.push({ obj: g1, spin: 0.25 }, { obj: g2, spin: -0.4 });
-      const code = makeTextSprite('{ code }', { size: 58, color: '#6ee7ff', worldScale: 0.015 });
-      addAt(u + 0.004, 7, 4.5, code);
-      const mech = makeTextSprite('B.E. MECH', { size: 40, color: '#8a7dff', weight: 500, worldScale: 0.012 });
-      addAt(u - 0.004, 8.5, 2.6, mech);
+      const z = PortfolioGame.chZ(0) - 14;
+      const g1 = new THREE.Mesh(new THREE.TorusGeometry(2.4, 0.34, 6, 9), dim(ACCENT2, 0.22));
+      g1.position.set(-8.5, 4.4, z);
+      const g2 = new THREE.Mesh(new THREE.TorusGeometry(1.5, 0.26, 6, 7), dim(ACCENT, 0.26));
+      g2.position.set(-5.4, 6.4, z - 2);
+      this.scene.add(g1, g2);
+      this.animated.push({ obj: g1, spin: 0.18 }, { obj: g2, spin: -0.28 });
     }
-
-    // Ch.01 — tenant towers around an SSO core
+    // II — tenant towers linked to one core
     {
-      const u = CHAPTERS[1].u + 0.024;
+      const z = PortfolioGame.chZ(1) - 14;
       const core = new THREE.Mesh(
-        new THREE.OctahedronGeometry(0.9, 0),
-        new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending })
+        new THREE.OctahedronGeometry(0.8, 0),
+        new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.7, blending: THREE.AdditiveBlending })
       );
-      addAt(u, -8, 5, core);
-      this.animated.push({ obj: core, spin: 0.5 });
-      const coreGlow = makeGlowSprite('#6ee7ff', 5);
-      coreGlow.position.copy(core.position);
-      this.scene.add(coreGlow);
+      core.position.set(8.5, 5.4, z);
+      this.scene.add(core);
+      this.animated.push({ obj: core, spin: 0.4 });
+      const glow = makeGlowSprite('#6ee7ff', 4, 0.5);
+      glow.position.copy(core.position);
+      this.scene.add(glow);
       const linePts = [];
       for (let i = 0; i < 8; i++) {
-        const h = 1.2 + Math.random() * 2.4;
-        const tower = new THREE.Mesh(
-          new THREE.BoxGeometry(0.5, h, 0.5),
-          new THREE.MeshBasicMaterial({ color: ACCENT2, wireframe: true, transparent: true, opacity: 0.5 })
-        );
-        const lat = -8 + Math.cos((i / 8) * Math.PI * 2) * 4.2;
-        const du = (Math.sin((i / 8) * Math.PI * 2) * 4.2) / this.curveLen;
-        addAt(u + du, lat, 1 + h / 2, tower);
+        const h = 1 + Math.random() * 2.2;
+        const tower = new THREE.Mesh(new THREE.BoxGeometry(0.4, h, 0.4), dim(ACCENT2, 0.2));
+        tower.position.set(8.5 + Math.cos((i / 8) * Math.PI * 2) * 4, 1.5 + h / 2, z + Math.sin((i / 8) * Math.PI * 2) * 3);
+        this.scene.add(tower);
         linePts.push(tower.position.clone().setY(tower.position.y + h / 2), core.position.clone());
       }
-      const lineGeo = new THREE.BufferGeometry().setFromPoints(linePts);
-      this.scene.add(new THREE.LineSegments(lineGeo, new THREE.LineBasicMaterial({
-        color: ACCENT, transparent: true, opacity: 0.25, blending: THREE.AdditiveBlending,
-      })));
+      this.scene.add(new THREE.LineSegments(
+        new THREE.BufferGeometry().setFromPoints(linePts),
+        new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.14, blending: THREE.AdditiveBlending })
+      ));
     }
-
-    // Ch.02 — a wall of paper work orders (turns to data via fxFactory)
+    // III — a wall of paper that can turn to light
     {
-      const u = CHAPTERS[2].u + 0.024;
-      this._factoryCells = [];
-      const cols = 6, rows = 4;
-      for (let cx = 0; cx < cols; cx++) {
-        for (let cy = 0; cy < rows; cy++) {
+      const z = PortfolioGame.chZ(2) - 15;
+      this._paperCells = [];
+      for (let cx = 0; cx < 6; cx++) {
+        for (let cy = 0; cy < 4; cy++) {
           const cell = new THREE.Mesh(
-            new THREE.PlaneGeometry(0.85, 1.1),
-            new THREE.MeshBasicMaterial({
-              color: 0xd8d6e6, transparent: true, opacity: 0.35, side: THREE.DoubleSide,
-            })
+            new THREE.PlaneGeometry(0.8, 1.05),
+            new THREE.MeshBasicMaterial({ color: 0xd8d6e6, transparent: true, opacity: 0.16, side: THREE.DoubleSide })
           );
-          addAt(u + (cx - cols / 2) * 0.0035, 8.2, 2.2 + cy * 1.35, cell);
-          cell.lookAt(this._onPath(u, 0, 3, new THREE.Vector3()));
-          this._factoryCells.push(cell);
+          cell.position.set(-10.5 + cx * 1.05, 2.6 + cy * 1.3, z - cx * 0.12);
+          cell.rotation.y = 0.5;
+          this.scene.add(cell);
+          this._paperCells.push(cell);
         }
       }
-      const label = makeTextSprite('9,000+ WORK ORDERS', { size: 40, color: '#8a7dff', weight: 500, worldScale: 0.012 });
-      addAt(u, 8.2, 8.4, label);
     }
-
-    // Ch.03 — a pulsing neural constellation
+    // IV — a pulsing constellation of minds
     {
-      const u = CHAPTERS[3].u + 0.024;
+      const z = PortfolioGame.chZ(3) - 14;
       const nodes = [];
-      for (let i = 0; i < 22; i++) {
+      for (let i = 0; i < 20; i++) {
         const s = new THREE.Mesh(
-          new THREE.IcosahedronGeometry(0.16, 0),
+          new THREE.IcosahedronGeometry(0.13, 0),
           new THREE.MeshBasicMaterial({
             color: i % 3 === 0 ? ACCENT2 : ACCENT,
-            transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending, depthWrite: false,
+            transparent: true, opacity: 0.7, blending: THREE.AdditiveBlending, depthWrite: false,
           })
         );
-        const du = ((Math.random() - 0.5) * 7) / this.curveLen;
-        addAt(u + du, -7 + (Math.random() - 0.5) * 5, 3.5 + (Math.random() - 0.5) * 4, s);
+        s.position.set(7 + (Math.random() - 0.5) * 6, 4.5 + (Math.random() - 0.5) * 4.5, z + (Math.random() - 0.5) * 4);
         s.userData.seed = i;
+        this.scene.add(s);
         nodes.push(s);
         this.animated.push({ obj: s, pulse: true });
       }
       const pts = [];
-      nodes.forEach((a, i) => {
-        const b = nodes[(i + 3) % nodes.length];
-        pts.push(a.position.clone(), b.position.clone());
-      });
+      nodes.forEach((a, i) => { pts.push(a.position.clone(), nodes[(i + 3) % nodes.length].position.clone()); });
       this.scene.add(new THREE.LineSegments(
         new THREE.BufferGeometry().setFromPoints(pts),
-        new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.18, blending: THREE.AdditiveBlending })
+        new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.1, blending: THREE.AdditiveBlending })
       ));
-      const label = makeTextSprite('RAG · AGENTS · GRAPHS', { size: 38, color: '#6ee7ff', weight: 500, worldScale: 0.012 });
-      addAt(u, -7, 7.6, label);
     }
-
-    // Ch.04 — three floating side-quest artifacts
+    // V — three floating artifacts
     {
-      const u = CHAPTERS[4].u + 0.024;
-      ['MEDICAL AI', 'NUTRITION AI', 'GAME ARENA'].forEach((name, i) => {
-        const m = new THREE.Mesh(
-          new THREE.IcosahedronGeometry(0.9, 0),
-          new THREE.MeshBasicMaterial({ color: i === 1 ? ACCENT2 : ACCENT, wireframe: true, transparent: true, opacity: 0.55 })
-        );
-        addAt(u + (i - 1) * 0.008, 7.6, 3.4 + (i % 2) * 1.6, m);
-        this.animated.push({ obj: m, spin: 0.3 + i * 0.1 });
-        const t = makeTextSprite(name, { size: 30, color: '#8b8a99', weight: 500, worldScale: 0.011 });
-        t.position.copy(m.position);
-        t.position.y += 1.6;
-        this.scene.add(t);
-      });
+      const z = PortfolioGame.chZ(4) - 14;
+      for (let i = 0; i < 3; i++) {
+        const m = new THREE.Mesh(new THREE.IcosahedronGeometry(0.85, 0), dim(i === 1 ? ACCENT2 : ACCENT, 0.24));
+        m.position.set(-9 + i * 2.6, 3.6 + (i % 2) * 1.8, z - i * 1.5);
+        this.scene.add(m);
+        this.animated.push({ obj: m, spin: 0.2 + i * 0.08 });
+      }
     }
-
-    // Ch.05 — a constellation of skills
+    // VI — a quiet field of points (the craft)
     {
-      const u = CHAPTERS[5].u + 0.024;
-      const WORDS = ['React.js', 'Node.js', 'Python', 'PostgreSQL', 'LangChain', 'RAG', 'n8n', 'Neo4j', 'FastAPI', 'MongoDB', 'LangGraph', 'MCP'];
-      WORDS.forEach((w, i) => {
-        const spr = makeTextSprite(w, { size: 38, color: i % 3 === 0 ? '#8a7dff' : '#6ee7ff', weight: 500, worldScale: 0.011 });
-        const du = ((i % 4) - 1.5) * 2.4 / this.curveLen * 8;
-        addAt(u + du, -6.5 - (i % 3) * 2.2, 2.4 + Math.floor(i / 4) * 1.7, spr);
-        spr.material.opacity = 0.65;
-        spr.userData.bobSeed = i * 1.3;
-        spr.userData.baseY = spr.position.y;
-        this.debris.push(spr);
-      });
+      const z = PortfolioGame.chZ(5) - 14;
+      const count = 60;
+      const pos = new Float32Array(count * 3);
+      for (let i = 0; i < count; i++) {
+        pos[i * 3] = 8 + (Math.random() - 0.5) * 8;
+        pos[i * 3 + 1] = 4.5 + (Math.random() - 0.5) * 5;
+        pos[i * 3 + 2] = z + (Math.random() - 0.5) * 6;
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      this.scene.add(new THREE.Points(geo, new THREE.PointsMaterial({
+        color: ACCENT, size: 0.28, transparent: true, opacity: 0.6, depthWrite: false, blending: THREE.AdditiveBlending,
+      })));
     }
-
-    // Epilogue — an open portal
+    // VII — an open ring of light
     {
-      const u = CHAPTERS[6].u + 0.03;
-      const big = new THREE.Mesh(
-        new THREE.TorusGeometry(5.4, 0.12, 12, 80),
-        new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending, depthWrite: false })
+      const z = PortfolioGame.chZ(6) - 16;
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(4.6, 0.07, 12, 80),
+        new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false })
       );
-      addAt(u, 0, 4.2, big);
-      const ahead = this._onPath(Math.min(u + 0.01, 1), 0, 4.2, new THREE.Vector3());
-      big.lookAt(ahead);
-      this.animated.push({ obj: big, spinZ: 0.12 });
-      const glow = makeGlowSprite('#6ee7ff', 12);
-      glow.position.copy(big.position);
+      ring.position.set(0, 5, z);
+      this.scene.add(ring);
+      this.animated.push({ obj: ring, spinZ: 0.1 });
+      const glow = makeGlowSprite('#6ee7ff', 11, 0.35);
+      glow.position.copy(ring.position);
       this.scene.add(glow);
-      const open = makeTextSprite('OPEN TO WORK', { size: 52, color: '#6ee7ff', worldScale: 0.014 });
-      addAt(u, 0, 11.2, open);
     }
-  }
-
-  _buildShip() {
-    const ship = new THREE.Group();
-    const hull = new THREE.Mesh(
-      new THREE.ConeGeometry(0.34, 1.25, 5),
-      new THREE.MeshBasicMaterial({ color: 0x0d0d18 })
-    );
-    hull.rotation.x = Math.PI / 2;
-    const wire = new THREE.Mesh(
-      new THREE.ConeGeometry(0.36, 1.3, 5),
-      new THREE.MeshBasicMaterial({ color: ACCENT, wireframe: true, transparent: true, opacity: 0.9 })
-    );
-    wire.rotation.x = Math.PI / 2;
-    const wings = new THREE.Mesh(
-      new THREE.OctahedronGeometry(0.42, 0),
-      new THREE.MeshBasicMaterial({ color: ACCENT2, wireframe: true, transparent: true, opacity: 0.55 })
-    );
-    wings.scale.set(2.1, 0.28, 0.9);
-    wings.position.z = -0.28;
-    const glow = makeGlowSprite('#6ee7ff', 2.6);
-    glow.position.z = -0.15;
-    const engine = makeGlowSprite('#8a7dff', 1.3);
-    engine.position.z = -0.85;
-    ship.add(hull, wire, wings, glow, engine);
-    this.scene.add(ship);
-    this.ship = ship;
-    this.shipEngine = engine;
-
-    this._shipPos = new THREE.Vector3();
-    this._shipAhead = new THREE.Vector3();
-    this._camPos = new THREE.Vector3();
-    this._camLook = new THREE.Vector3();
-    this._placeCamera(0, true);
-  }
-
-  _placeCamera(dt, snap = false) {
-    const t = this.clock.elapsedTime;
-    const reading = this.state === 'story';
-    // gentle sway + mouse parallax while reading; tight chase while travelling
-    const sway = reading ? Math.sin(t * 0.35) * 0.5 : 0;
-    const lat = sway + this.mouse.x * (reading ? 0.7 : 0.25);
-    const lift = 2.3 + this.mouse.y * (reading ? 0.3 : 0.1);
-
-    this._onPath(this.playerU + 0.004, 0, 0.55 + Math.sin(t * 1.6) * 0.06, this._shipPos);
-    this._onPath(this.playerU + 0.011, 0, 0.55, this._shipAhead);
-    this.ship.position.copy(this._shipPos);
-    this.ship.lookAt(this._shipAhead);
-
-    this._onPath(this.playerU - 0.011, lat, lift, this._camPos);
-    this._onPath(this.playerU + 0.014, 0, 1.15, this._camLook);
-    if (snap) this.camera.position.copy(this._camPos);
-    else this.camera.position.lerp(this._camPos, Math.min(dt * 4, 1));
-    this.camera.lookAt(this._camLook);
   }
 
   /* ---------------- input ---------------- */
@@ -1251,14 +1062,14 @@ export class PortfolioGame {
       if (e.repeat) return;
       switch (e.key) {
         case 'Escape': this.exit(); break;
-        case 'Enter': case ' ': case 'ArrowRight':
+        case 'Enter': case ' ': case 'ArrowRight': case 'ArrowDown':
           if (this.state === 'title') this._begin();
-          else if (this.state === 'story') this._advance();
+          else if (this.state === 'scene' || this.state === 'transition') this._advance();
           else if (this.state === 'end') this._replay();
           e.preventDefault();
           break;
-        case 'ArrowLeft': case 'Backspace':
-          if (this.state === 'story') { this._goBack(); e.preventDefault(); }
+        case 'ArrowLeft': case 'ArrowUp': case 'Backspace':
+          if (this.state === 'scene') { this._goBack(); e.preventDefault(); }
           break;
       }
     };
@@ -1270,11 +1081,43 @@ export class PortfolioGame {
     };
     window.addEventListener('pointermove', this._onPointerMove, { passive: true });
 
-    // clicking the sky advances the story (classic visual-novel behaviour)
+    // clicking the world advances; clicking during a transition skips it
     this._onCanvasClick = () => {
-      if (this.state === 'story') this._advance();
+      if (this.state === 'scene') this._advance();
+      else if (this.state === 'transition') this._skipTitleCard();
     };
     this.canvas.addEventListener('click', this._onCanvasClick);
+    this.el.tc.addEventListener('click', this._onCanvasClick);
+
+    // scroll to move through the story, like a film strip
+    this._onWheel = (e) => {
+      if (e.target.closest('.scene__widget') || e.target.closest('.game__screen')) return;
+      const now = performance.now();
+      if (now - this._wheelLock < 750 || Math.abs(e.deltaY) < 25) return;
+      this._wheelLock = now;
+      if (this.state === 'title' && e.deltaY > 0) { this._begin(); return; }
+      if (this.state !== 'scene') return;
+      if (e.deltaY > 0) this._advance();
+      else this._goBack();
+    };
+    window.addEventListener('wheel', this._onWheel, { passive: true });
+
+    // swipe on touch
+    this._touchY = null;
+    this._onTouchStart = (e) => { this._touchY = e.touches[0]?.clientY ?? null; };
+    this._onTouchEnd = (e) => {
+      if (this._touchY === null) return;
+      const dy = this._touchY - (e.changedTouches[0]?.clientY ?? this._touchY);
+      this._touchY = null;
+      if (e.target.closest('.scene__widget') || e.target.closest('.game__screen') || e.target.closest('.game__nav')) return;
+      if (Math.abs(dy) < 55) return;
+      if (this.state === 'title' && dy > 0) { this._begin(); return; }
+      if (this.state !== 'scene') return;
+      if (dy > 0) this._advance();
+      else this._goBack();
+    };
+    window.addEventListener('touchstart', this._onTouchStart, { passive: true });
+    window.addEventListener('touchend', this._onTouchEnd, { passive: true });
 
     this._onResize = () => {
       this.camera.aspect = innerWidth / innerHeight;
@@ -1294,9 +1137,8 @@ export class PortfolioGame {
       if (!this.sfx.muted) this.sfx.ui();
     });
     this.el.next.addEventListener('click', () => this._advance());
-    this.el.back.addEventListener('click', () => this._goBack());
-    // click on the narrative text finishes the typewriter
-    this.el.text.addEventListener('click', () => this.skipTyping());
+    this.el.prev.addEventListener('click', () => this._goBack());
+    this.el.text.addEventListener('click', () => this.finishReveal());
   }
 
   /* ---------------- frame loop ---------------- */
@@ -1305,48 +1147,33 @@ export class PortfolioGame {
     const dt = Math.min(this.clock.getDelta(), 0.05);
     const time = this.clock.elapsedTime;
 
-    this.roadUniforms.uTime.value = time;
-    const boostTarget = this.state === 'travel' ? 1 : 0.08;
-    this.boost += (boostTarget - this.boost) * Math.min(dt * 3, 1);
-    this.roadUniforms.uBoost.value = this.boost;
+    this.floorUniforms.uTime.value = time;
+    if (this.dust) this.dust.rotation.y = Math.sin(time * 0.03) * 0.04;
 
-    for (const d of this.debris) {
-      if (d.isSprite && d.userData.baseY !== undefined) {
-        d.position.y = d.userData.baseY + Math.sin(time * 0.7 + d.userData.bobSeed) * 0.35;
-      } else if (d.userData.spin) {
-        d.rotation.x += d.userData.spin * dt;
-        d.rotation.y += d.userData.spin * 1.3 * dt;
-      }
-    }
     for (const a of this.animated) {
       if (a.spin) { a.obj.rotation.x += a.spin * dt; a.obj.rotation.y += a.spin * 0.7 * dt; }
       if (a.spinZ) a.obj.rotation.z += a.spinZ * dt;
-      if (a.pulse) {
-        const s = 1 + Math.sin(time * 2 + a.obj.userData.seed) * 0.35;
-        a.obj.scale.setScalar(s);
-      }
+      if (a.pulse) a.obj.scale.setScalar(1 + Math.sin(time * 1.6 + a.obj.userData.seed) * 0.3);
     }
-    for (const p of this.portals) {
-      p.ring.rotation.z += dt * 0.4;
-      p.ring2.rotation.z -= dt * 0.25;
-    }
-    this.shipEngine.material.opacity = 0.55 + Math.sin(time * 20) * 0.2 + this.boost * 0.4;
 
-    if (this.state === 'title') {
-      this.playerU = 0.015 + Math.sin(time * 0.14) * 0.002;
-    } else if (this.state === 'travel' && this._travel) {
-      const { from, to, t0, dur, then } = this._travel;
+    if (this._camTween) {
+      const { from, to, t0, dur } = this._camTween;
       const t = Math.min((performance.now() - t0) / dur, 1);
       const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      this.playerU = from + (to - from) * ease;
-      if (t >= 1) {
-        this._travel = null;
-        this.sfx.chapter();
-        then();
-      }
+      this.camZ = from + (to - from) * ease;
+      if (t >= 1) this._camTween = null;
     }
+    if (this.state === 'title') this.camZ = 30 - Math.sin(time * 0.1) * 1.5;
 
-    this._placeCamera(dt, false);
+    // slow dolly drift + gentle parallax — the film never fully stops
+    const drift = Math.sin(time * 0.12) * 0.7;
+    this.camera.position.set(
+      this.mouse.x * 1.3 + drift,
+      2.2 + this.mouse.y * 0.55 + Math.sin(time * 0.2) * 0.2,
+      this.camZ
+    );
+    this.camera.lookAt(drift * 0.4, 2.6, this.camZ - 32);
+
     this.renderer.render(this.scene, this.camera);
   }
 
@@ -1354,10 +1181,15 @@ export class PortfolioGame {
   exit() {
     if (this.disposed) return;
     this.disposed = true;
-    this.skipTyping();
+    this.finishReveal();
+    if (this._typing) { clearInterval(this._typing.timer); this._typing = null; }
+    this._tcTimers.forEach(clearTimeout);
     this.renderer.setAnimationLoop(null);
     window.removeEventListener('keydown', this._onKeyDown);
     window.removeEventListener('pointermove', this._onPointerMove);
+    window.removeEventListener('wheel', this._onWheel);
+    window.removeEventListener('touchstart', this._onTouchStart);
+    window.removeEventListener('touchend', this._onTouchEnd);
     window.removeEventListener('resize', this._onResize);
     this.canvas.removeEventListener('click', this._onCanvasClick);
     this.scene.traverse((obj) => {
