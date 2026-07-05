@@ -7,7 +7,7 @@
    reader sets the pace. Lazy-loaded; the site itself stays untouched.
    ========================================================================= */
 import * as THREE from 'three';
-import './game.css';
+import './story.css';
 
 const ACCENT = 0x6ee7ff;
 const ACCENT2 = 0x8a7dff;
@@ -422,7 +422,7 @@ const WIDGETS = {
 };
 
 /* ============================ STORY MODE ============================ */
-export class PortfolioGame {
+export class PortfolioStory {
   constructor({ onExit } = {}) {
     this.onExit = onExit || (() => {});
     this.sfx = new Sfx();
@@ -651,7 +651,7 @@ export class PortfolioGame {
     } else {
       if (step.ch !== this.currentCh) {
         this.currentCh = step.ch;
-        this._camTween = { from: this.camZ, to: PortfolioGame.chZ(step.ch) + 16, t0: performance.now(), dur: 900 };
+        this._camTween = { from: this.camZ, to: PortfolioStory.chZ(step.ch) + 16, t0: performance.now(), dur: 900 };
       }
       this._showStep(step);
     }
@@ -672,7 +672,7 @@ export class PortfolioGame {
     this._tcTimers.forEach(clearTimeout);
     this._tcTimers = [
       setTimeout(() => {
-        this._camTween = { from: this.camZ, to: PortfolioGame.chZ(CHAPTERS.indexOf(ch)) + 16, t0: performance.now(), dur: 1400 };
+        this._camTween = { from: this.camZ, to: PortfolioStory.chZ(CHAPTERS.indexOf(ch)) + 16, t0: performance.now(), dur: 1400 };
       }, 350),
       setTimeout(() => { this.root.classList.remove('is-tc'); }, 2450),
       setTimeout(() => {
@@ -687,7 +687,7 @@ export class PortfolioGame {
     if (this.state !== 'transition') return;
     this._tcTimers.forEach(clearTimeout);
     this._tcTimers = [];
-    this.camZ = PortfolioGame.chZ(this.currentCh) + 16;
+    this.camZ = PortfolioStory.chZ(this.currentCh) + 16;
     this._camTween = null;
     this.root.classList.remove('is-tc');
     this.state = 'scene';
@@ -917,12 +917,12 @@ export class PortfolioGame {
     // soft nebula glows along the journey
     for (let i = 0; i < CHAPTERS.length; i++) {
       const neb = makeGlowSprite(i % 2 ? '#8a7dff' : '#6ee7ff', 70 + (i % 3) * 30, 0.14);
-      neb.position.set((i % 2 ? 1 : -1) * (18 + (i % 3) * 8), 10 + (i % 3) * 5, PortfolioGame.chZ(i) - 40);
+      neb.position.set((i % 2 ? 1 : -1) * (18 + (i % 3) * 8), 10 + (i % 3) * 5, PortfolioStory.chZ(i) - 40);
       this.scene.add(neb);
     }
     // and a destination light at the far end
     const sun = makeGlowSprite('#8a7dff', 160, 0.4);
-    sun.position.set(0, 20, PortfolioGame.chZ(CHAPTERS.length - 1) - 130);
+    sun.position.set(0, 20, PortfolioStory.chZ(CHAPTERS.length - 1) - 130);
     this.scene.add(sun);
     const sunCore = makeGlowSprite('#6ee7ff', 70, 0.5);
     sunCore.position.copy(sun.position).z += 2;
@@ -938,7 +938,7 @@ export class PortfolioGame {
 
     // I — interlocking gears
     {
-      const z = PortfolioGame.chZ(0) - 14;
+      const z = PortfolioStory.chZ(0) - 14;
       const g1 = new THREE.Mesh(new THREE.TorusGeometry(2.4, 0.34, 6, 9), dim(ACCENT2, 0.22));
       g1.position.set(-8.5, 4.4, z);
       const g2 = new THREE.Mesh(new THREE.TorusGeometry(1.5, 0.26, 6, 7), dim(ACCENT, 0.26));
@@ -948,7 +948,7 @@ export class PortfolioGame {
     }
     // II — tenant towers linked to one core
     {
-      const z = PortfolioGame.chZ(1) - 14;
+      const z = PortfolioStory.chZ(1) - 14;
       const core = new THREE.Mesh(
         new THREE.OctahedronGeometry(0.8, 0),
         new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.7, blending: THREE.AdditiveBlending })
@@ -974,7 +974,7 @@ export class PortfolioGame {
     }
     // III — a wall of paper that can turn to light
     {
-      const z = PortfolioGame.chZ(2) - 15;
+      const z = PortfolioStory.chZ(2) - 15;
       this._paperCells = [];
       for (let cx = 0; cx < 6; cx++) {
         for (let cy = 0; cy < 4; cy++) {
@@ -991,7 +991,7 @@ export class PortfolioGame {
     }
     // IV — a pulsing constellation of minds
     {
-      const z = PortfolioGame.chZ(3) - 14;
+      const z = PortfolioStory.chZ(3) - 14;
       const nodes = [];
       for (let i = 0; i < 20; i++) {
         const s = new THREE.Mesh(
@@ -1016,7 +1016,7 @@ export class PortfolioGame {
     }
     // V — three floating artifacts
     {
-      const z = PortfolioGame.chZ(4) - 14;
+      const z = PortfolioStory.chZ(4) - 14;
       for (let i = 0; i < 3; i++) {
         const m = new THREE.Mesh(new THREE.IcosahedronGeometry(0.85, 0), dim(i === 1 ? ACCENT2 : ACCENT, 0.24));
         m.position.set(-9 + i * 2.6, 3.6 + (i % 2) * 1.8, z - i * 1.5);
@@ -1026,7 +1026,7 @@ export class PortfolioGame {
     }
     // VI — a quiet field of points (the craft)
     {
-      const z = PortfolioGame.chZ(5) - 14;
+      const z = PortfolioStory.chZ(5) - 14;
       const count = 60;
       const pos = new Float32Array(count * 3);
       for (let i = 0; i < count; i++) {
@@ -1042,7 +1042,7 @@ export class PortfolioGame {
     }
     // VII — an open ring of light
     {
-      const z = PortfolioGame.chZ(6) - 16;
+      const z = PortfolioStory.chZ(6) - 16;
       const ring = new THREE.Mesh(
         new THREE.TorusGeometry(4.6, 0.07, 12, 80),
         new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false })

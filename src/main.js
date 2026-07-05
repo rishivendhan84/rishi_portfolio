@@ -234,38 +234,44 @@ if (track && !reduceMotion) {
   });
 }
 
-/* ---------- Story mode (lazy-loaded, leaves the site untouched) ---------- */
-let activeGame = null;
-let gameLoading = false;
+/* ---------- Story & Game modes (lazy-loaded, leave the site untouched) ---------- */
+let activeMode = null;
+let modeLoading = false;
+const modeButtons = () => document.querySelectorAll('[data-story-launch], [data-game-launch]');
 
-async function launchGame() {
-  if (activeGame || gameLoading) return;
-  gameLoading = true;
-  document.querySelectorAll('[data-game-launch]').forEach((b) => b.classList.add('is-loading'));
+async function launchMode(kind) {
+  if (activeMode || modeLoading) return;
+  modeLoading = true;
+  modeButtons().forEach((b) => b.classList.add('is-loading'));
   try {
-    const { PortfolioGame } = await import('./game.js');
+    const Mode = kind === 'story'
+      ? (await import('./story.js')).PortfolioStory
+      : (await import('./arcade.js')).PortfolioArcade;
     closeMenu();
     lenis.stop();
     if (scene) scene.running = false;
     document.body.classList.add('is-game');
-    activeGame = new PortfolioGame({
+    activeMode = new Mode({
       onExit: () => {
-        activeGame = null;
+        activeMode = null;
         document.body.classList.remove('is-game');
         lenis.start();
         if (scene) scene.running = true;
       },
     });
   } catch (err) {
-    console.error('Story mode failed to start.', err);
+    console.error(`${kind} mode failed to start.`, err);
   } finally {
-    gameLoading = false;
-    document.querySelectorAll('[data-game-launch]').forEach((b) => b.classList.remove('is-loading'));
+    modeLoading = false;
+    modeButtons().forEach((b) => b.classList.remove('is-loading'));
   }
 }
 
+document.querySelectorAll('[data-story-launch]').forEach((btn) => {
+  btn.addEventListener('click', () => launchMode('story'));
+});
 document.querySelectorAll('[data-game-launch]').forEach((btn) => {
-  btn.addEventListener('click', launchGame);
+  btn.addEventListener('click', () => launchMode('game'));
 });
 
 /* ---------- Year ---------- */

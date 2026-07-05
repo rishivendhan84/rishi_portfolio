@@ -1,0 +1,483 @@
+/* =========================================================================
+   GAME MODE — Portfolio: The Pathway
+   Overlay UI on top of the game canvas. Reuses the site's design tokens.
+   ========================================================================= */
+.arcade {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: var(--bg, #06060a);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  color: var(--ink, #eceaf6);
+  overflow: hidden;
+}
+.arcade.is-on {
+  opacity: 1;
+}
+
+.arcade__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.arcade__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(3, 3, 8, 0.55) 100%),
+    linear-gradient(to bottom, rgba(6, 6, 10, 0.5), transparent 18%, transparent 84%, rgba(6, 6, 10, 0.6));
+}
+
+/* ---------- HUD ---------- */
+.arcade__hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.8rem, 3vw, 2rem);
+  padding: 1rem clamp(1rem, 3.5vw, 2.4rem);
+  z-index: 4;
+}
+
+.arcade__exit,
+.arcade__mute {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font: 500 0.78rem/1 var(--font-body, 'Inter', sans-serif);
+  letter-spacing: 0.05em;
+  color: var(--ink-dim, #8b8a99);
+  background: rgba(236, 234, 246, 0.04);
+  border: 1px solid var(--line, rgba(236, 234, 246, 0.1));
+  border-radius: 999px;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+  transition: color 0.25s, border-color 0.25s, background 0.25s;
+}
+.arcade__exit:hover,
+.arcade__mute:hover {
+  color: var(--ink, #eceaf6);
+  border-color: var(--accent, #6ee7ff);
+}
+.arcade__mute {
+  padding: 0.55rem 0.8rem;
+  font-size: 0.9rem;
+}
+.arcade__mute.is-muted {
+  opacity: 0.35;
+  text-decoration: line-through;
+}
+
+.arcade__track {
+  position: relative;
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(236, 234, 246, 0.08);
+}
+.arcade__track-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-2, #8a7dff), var(--accent, #6ee7ff));
+  box-shadow: 0 0 12px rgba(110, 231, 255, 0.55);
+  transition: width 0.15s linear;
+}
+.arcade__track-dots i {
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: #0b0b12;
+  border: 1px solid var(--ink-dim, #8b8a99);
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.arcade__track-dots i.is-done {
+  background: var(--accent, #6ee7ff);
+  border-color: var(--accent, #6ee7ff);
+  box-shadow: 0 0 10px rgba(110, 231, 255, 0.8);
+}
+
+.arcade__right {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.arcade__cores {
+  font: 600 0.82rem/1 var(--font-display, 'Space Grotesk', sans-serif);
+  letter-spacing: 0.08em;
+  color: var(--ink-dim, #8b8a99);
+  white-space: nowrap;
+}
+.arcade__cores i {
+  color: var(--accent, #6ee7ff);
+  font-style: normal;
+}
+.arcade__cores b {
+  color: var(--ink, #eceaf6);
+}
+
+/* ---------- Zone label + toast ---------- */
+.arcade__zone {
+  position: absolute;
+  top: 4.1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  font: 500 0.7rem/1 var(--font-display, 'Space Grotesk', sans-serif);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-dim, #8b8a99);
+  white-space: nowrap;
+  max-width: 92vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+.arcade__zone.is-flash {
+  animation: gzone 0.9s ease;
+}
+@keyframes gzone {
+  0% { opacity: 0; letter-spacing: 0.5em; color: var(--accent, #6ee7ff); }
+  100% { opacity: 1; letter-spacing: 0.22em; }
+}
+
+.arcade__toast {
+  position: absolute;
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  font: 600 0.85rem/1 var(--font-display, 'Space Grotesk', sans-serif);
+  letter-spacing: 0.12em;
+  color: var(--accent, #6ee7ff);
+  opacity: 0;
+  pointer-events: none;
+}
+.arcade__toast.is-on {
+  animation: gtoast 0.9s ease;
+}
+@keyframes gtoast {
+  0% { opacity: 0; transform: translate(-50%, 10px); }
+  25% { opacity: 1; transform: translate(-50%, 0); }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -14px); }
+}
+
+/* ---------- Bottom hint ---------- */
+.arcade__hint {
+  position: absolute;
+  bottom: 1.1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint, #6f6d84);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+  white-space: nowrap;
+}
+.arcade.is-running .arcade__hint {
+  opacity: 1;
+}
+.arcade__hint kbd,
+.arcade__screen-keys kbd,
+.gpanel__continue kbd {
+  display: inline-block;
+  font: 500 0.68rem/1 var(--font-body, 'Inter', sans-serif);
+  padding: 0.22em 0.5em;
+  border: 1px solid var(--line, rgba(236, 234, 246, 0.1));
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: rgba(236, 234, 246, 0.05);
+  color: var(--ink, #eceaf6);
+}
+.arcade__hint-touch {
+  display: none;
+}
+@media (hover: none) and (pointer: coarse) {
+  .arcade__hint-desktop { display: none; }
+  .arcade__hint-touch { display: inline; }
+}
+
+/* ---------- Fullscreen screens (intro / end) ---------- */
+.arcade__screen {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1.4rem;
+  padding: clamp(1.2rem, 5vw, 4rem);
+  background: radial-gradient(90% 70% at 50% 45%, rgba(6, 6, 10, 0.55), rgba(6, 6, 10, 0.88));
+  backdrop-filter: blur(2px);
+}
+.arcade__screen[hidden],
+.arcade__panel[hidden] {
+  display: none !important;
+}
+.arcade__screen--end {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.arcade__screen--end.is-open {
+  opacity: 1;
+}
+
+.arcade__screen-kicker {
+  font: 500 0.72rem/1 var(--font-display, 'Space Grotesk', sans-serif);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent, #6ee7ff);
+}
+.arcade__screen-title {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: clamp(2.2rem, 8vw, 5.2rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  text-shadow: 0 0 34px rgba(110, 231, 255, 0.35);
+}
+.arcade__screen-title span {
+  color: var(--accent, #6ee7ff);
+}
+.arcade__screen-accent {
+  color: var(--accent, #6ee7ff) !important;
+}
+.arcade__screen-sub {
+  max-width: 34rem;
+  color: var(--ink-dim, #8b8a99);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+.arcade__screen-keys {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.6rem;
+  font-size: 0.74rem;
+  color: var(--ink-faint, #6f6d84);
+}
+
+.arcade__start {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font: 600 0.9rem/1 var(--font-display, 'Space Grotesk', sans-serif);
+  letter-spacing: 0.06em;
+  color: #06060a;
+  background: linear-gradient(100deg, var(--accent, #6ee7ff), #9ff0ff);
+  border: none;
+  border-radius: 999px;
+  padding: 1rem 2.2rem;
+  cursor: pointer;
+  box-shadow: 0 0 26px rgba(110, 231, 255, 0.4);
+  transition: transform 0.25s var(--ease, ease), box-shadow 0.25s;
+}
+.arcade__start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(110, 231, 255, 0.65);
+}
+.arcade__ghostbtn {
+  font: 500 0.82rem/1 var(--font-body, 'Inter', sans-serif);
+  letter-spacing: 0.04em;
+  color: var(--ink-dim, #8b8a99);
+  background: none;
+  border: 1px solid var(--line, rgba(236, 234, 246, 0.1));
+  border-radius: 999px;
+  padding: 0.95rem 1.8rem;
+  cursor: pointer;
+  transition: color 0.25s, border-color 0.25s;
+}
+.arcade__ghostbtn:hover {
+  color: var(--ink, #eceaf6);
+  border-color: var(--accent, #6ee7ff);
+}
+
+/* ---------- End screen extras ---------- */
+.arcade__end-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem 2.2rem;
+  font-size: 0.82rem;
+  color: var(--ink-dim, #8b8a99);
+}
+.arcade__end-stats b {
+  color: var(--accent, #6ee7ff);
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+}
+.arcade__end-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.8rem;
+  font-size: 0.85rem;
+}
+.arcade__end-links a {
+  color: var(--ink, #eceaf6);
+  border-bottom: 1px solid var(--line, rgba(236, 234, 246, 0.1));
+  padding-bottom: 2px;
+  transition: color 0.25s, border-color 0.25s;
+}
+.arcade__end-links a:hover {
+  color: var(--accent, #6ee7ff);
+  border-color: var(--accent, #6ee7ff);
+}
+.arcade__end-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 0.4rem;
+}
+
+/* ---------- Checkpoint panel ---------- */
+.arcade__panel {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 3rem);
+  padding-bottom: clamp(3.2rem, 8vh, 5rem);
+  background: linear-gradient(to top, rgba(6, 6, 10, 0.82), rgba(6, 6, 10, 0.15) 55%, transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.arcade__panel.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gpanel {
+  width: min(46rem, 100%);
+  max-height: min(70vh, 34rem);
+  overflow-y: auto;
+  background: rgba(11, 11, 20, 0.88);
+  border: 1px solid rgba(110, 231, 255, 0.22);
+  border-radius: 18px;
+  padding: clamp(1.2rem, 3vw, 2rem);
+  box-shadow: 0 0 60px rgba(110, 231, 255, 0.12), 0 30px 60px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(14px);
+  transform: translateY(16px);
+  transition: transform 0.3s var(--ease, ease);
+}
+.arcade__panel.is-open .gpanel {
+  transform: translateY(0);
+}
+
+.gpanel__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+.gpanel__gate {
+  font: 600 0.68rem/1 var(--font-display, 'Space Grotesk', sans-serif);
+  letter-spacing: 0.24em;
+  color: var(--accent, #6ee7ff);
+  text-transform: uppercase;
+}
+.gpanel__meta {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint, #6f6d84);
+  white-space: nowrap;
+}
+.gpanel__title {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: clamp(1.4rem, 3.4vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 0.7rem;
+}
+.gpanel__desc {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--ink-dim, #8b8a99);
+}
+.gpanel__desc em {
+  color: var(--ink, #eceaf6);
+  font-style: normal;
+}
+.gpanel__desc b {
+  color: var(--ink, #eceaf6);
+  font-weight: 600;
+}
+
+.gpanel__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.8rem;
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  color: var(--ink-dim, #8b8a99);
+}
+.gpanel__stats b {
+  color: var(--accent, #6ee7ff);
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+}
+
+.gpanel__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  list-style: none;
+  padding: 0;
+}
+.gpanel__tags li {
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-dim, #8b8a99);
+  border: 1px solid var(--line, rgba(236, 234, 246, 0.1));
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+}
+
+.gpanel__link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  color: var(--accent, #6ee7ff);
+  border-bottom: 1px solid rgba(110, 231, 255, 0.4);
+  padding-bottom: 1px;
+}
+
+.gpanel__continue {
+  margin-top: 1.3rem;
+  padding: 0.85rem 1.7rem;
+  font-size: 0.82rem;
+}
+.gpanel__continue kbd {
+  border-color: rgba(6, 6, 10, 0.35);
+  background: rgba(6, 6, 10, 0.12);
+  color: #06060a;
+}
+
+@media (max-width: 640px) {
+  .arcade__zone { top: 4.6rem; }
+  .arcade__cores span { display: inline; }
+  .gpanel__head { flex-direction: column; gap: 0.3rem; }
+  .arcade__end-links { flex-direction: column; gap: 0.55rem; }
+}
