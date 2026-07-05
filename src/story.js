@@ -17,7 +17,7 @@ const BG = 0x06060a;
 const CHAPTERS = [
   { key: 'origin', numeral: 'I', title: 'Origin', dates: '2017 — 2021 · Chennai', motif: 'origin' },
   { key: 'minsway', numeral: 'II', title: 'First Contact', dates: 'Dec 2021 — May 2025 · Minsway Solutions', motif: 'towers' },
-  { key: 'factory', numeral: 'III', title: 'The Paper Factory', dates: 'May 2025 — Present · Different Hair Pvt. Ltd', motif: 'paper' },
+  { key: 'factory', numeral: 'III', title: 'Production Planning Software', dates: 'May 2025 — Present · Different Hair Pvt. Ltd', motif: 'paper' },
   { key: 'ai', numeral: 'IV', title: 'The Machines Learn', dates: 'The GenAI arc · Different Hair & CX Analytix', motif: 'neural' },
   { key: 'labs', numeral: 'V', title: 'After Hours', dates: 'Independent projects', motif: 'artifacts' },
   { key: 'craft', numeral: 'VI', title: 'The Craft', dates: 'One toolkit behind every chapter', motif: 'constellation' },
@@ -114,7 +114,7 @@ function buildScript() {
     /* VII · The Unwritten Chapter */
     {
       ch: 6,
-      text: 'The story so far: <b>~4.5 years</b>. Two companies. A paper factory digitized. Three AI systems working unsupervised. A toolkit that keeps growing.',
+      text: 'The story so far: <b>~4.5 years</b>. Two companies. A factory’s entire production planning digitized. Three AI systems working unsupervised. A toolkit that keeps growing.',
       stats: [['~4.5', 'years shipping'], ['35%', 'faster APIs'], ['9,000+', 'work orders'], ['3', 'AI systems live']],
     },
     { ch: 6, text: 'The next chapter is <b>unwritten</b>.<br/>It could start with a message.', end: true },
@@ -282,7 +282,7 @@ const WIDGETS = {
     ];
     root.innerHTML = `
       <div class="w-chat">
-        <div class="w-chat__log"><div class="w-chat__msg w-chat__msg--bot">Hi — I’m the production RAG bot. Ask me something.</div></div>
+        <div class="w-chat__log" data-lenis-prevent><div class="w-chat__msg w-chat__msg--bot">Hi — I’m the production RAG bot. Ask me something.</div></div>
         <div class="w-chat__qs">${QA.map(([q], i) => `<button type="button" data-q="${i}">${q}</button>`).join('')}</div>
         <a class="w-chat__live" href="https://hc-chat-widget.vercel.app" target="_blank" rel="noopener noreferrer">or interrogate the real one, live ↗</a>
       </div>`;
@@ -464,9 +464,10 @@ export class PortfolioStory {
         <div class="scene__kicker"></div>
         <div class="scene__text"></div>
         <div class="scene__stats"></div>
-        <div class="scene__widget"></div>
+        <div class="scene__widget" data-lenis-prevent></div>
         <ul class="scene__tags"></ul>
         <div class="scene__choices" hidden></div>
+        <button class="scene__cue" type="button" hidden>continue <i>▾</i></button>
       </div>
 
       <div class="game__nav">
@@ -499,7 +500,7 @@ export class PortfolioStory {
           <em>≈ 3 minutes.</em>
         </p>
         <button class="game__start" type="button">Begin</button>
-        <p class="game__screen-keys">I · Origin — II · First Contact — III · The Paper Factory — IV · The Machines Learn — V · After Hours — VI · The Craft — VII · The Unwritten Chapter</p>
+        <p class="game__screen-keys">I · Origin — II · First Contact — III · Production Planning Software — IV · The Machines Learn — V · After Hours — VI · The Craft — VII · The Unwritten Chapter</p>
       </div>
 
       <div class="game__screen game__screen--end" hidden>
@@ -529,6 +530,7 @@ export class PortfolioStory {
       widget: root.querySelector('.scene__widget'),
       tags: root.querySelector('.scene__tags'),
       choices: root.querySelector('.scene__choices'),
+      cue: root.querySelector('.scene__cue'),
       navLabel: root.querySelector('.game__nav-label'),
       ticks: root.querySelector('.game__nav-ticks'),
       prev: root.querySelector('.game__nav-prev'),
@@ -706,6 +708,7 @@ export class PortfolioStory {
     this.el.tags.innerHTML = '';
     this.el.choices.hidden = true;
     this.el.choices.innerHTML = '';
+    this.el.cue.hidden = true;
     this.el.next.hidden = false;
     this.el.prev.disabled = this.stepIndex <= 0;
 
@@ -731,6 +734,8 @@ export class PortfolioStory {
         if (step.stats) this._renderStats(step.stats);
         if (step.tags) this.el.tags.innerHTML = step.tags.map((t) => `<li>${t}</li>`).join('');
         if (step.widget && WIDGETS[step.widget]) WIDGETS[step.widget](this.el.widget, this);
+        // once the line is fully on screen, show a quiet "continue" cue
+        if (this.state === 'scene') this.el.cue.hidden = false;
       });
     }
     this.el.scene.hidden = false;
@@ -797,7 +802,10 @@ export class PortfolioStory {
 
   _updateProgress() {
     const ch = CHAPTERS[Math.max(this.currentCh, 0)];
-    this.el.navLabel.textContent = `${ch.numeral} · ${ch.title}`;
+    const chSteps = this.script.filter((s) => s.ch === this.currentCh && !s.choice);
+    const within = chSteps.indexOf(this.script[this.stepIndex]);
+    const beat = chSteps.length > 1 && within >= 0 ? `  ·  ${within + 1} / ${chSteps.length}` : '';
+    this.el.navLabel.textContent = `${ch.numeral} · ${ch.title}${beat}`;
     [...this.el.ticks.children].forEach((d, i) => {
       d.classList.toggle('is-done', i < this.currentCh);
       d.classList.toggle('is-here', i === this.currentCh);
@@ -1089,15 +1097,27 @@ export class PortfolioStory {
     this.canvas.addEventListener('click', this._onCanvasClick);
     this.el.tc.addEventListener('click', this._onCanvasClick);
 
-    // scroll to move through the story, like a film strip
+    // scroll to move through the story, like a film strip.
+    // Trackpads emit streams of small deltas, so accumulate them instead of
+    // requiring one big notch; anything inside a scrollable panel is left
+    // alone (those panels also carry data-lenis-prevent so native scrolling
+    // works while the page's smooth-scroller is paused).
+    this._wheelAcc = 0;
     this._onWheel = (e) => {
       if (e.target.closest('.scene__widget') || e.target.closest('.game__screen')) return;
       const now = performance.now();
-      if (now - this._wheelLock < 750 || Math.abs(e.deltaY) < 25) return;
+      if (now - this._wheelLock < 650) return;
+      this._wheelAcc += e.deltaY;
+      clearTimeout(this._wheelDecay);
+      this._wheelDecay = setTimeout(() => { this._wheelAcc = 0; }, 450);
+      if (Math.abs(this._wheelAcc) < 70) return;
+      const dir = this._wheelAcc > 0 ? 1 : -1;
+      this._wheelAcc = 0;
       this._wheelLock = now;
-      if (this.state === 'title' && e.deltaY > 0) { this._begin(); return; }
+      if (this.state === 'title' && dir > 0) { this._begin(); return; }
+      if (this.state === 'transition') { this._skipTitleCard(); return; }
       if (this.state !== 'scene') return;
-      if (e.deltaY > 0) this._advance();
+      if (dir > 0) this._advance();
       else this._goBack();
     };
     window.addEventListener('wheel', this._onWheel, { passive: true });
@@ -1138,7 +1158,10 @@ export class PortfolioStory {
     });
     this.el.next.addEventListener('click', () => this._advance());
     this.el.prev.addEventListener('click', () => this._goBack());
-    this.el.text.addEventListener('click', () => this.finishReveal());
+    this.el.cue.addEventListener('click', () => this._advance());
+    // clicking the narrative behaves like clicking anywhere: finish the
+    // line if it's still appearing, otherwise move on
+    this.el.text.addEventListener('click', () => this._advance());
   }
 
   /* ---------------- frame loop ---------------- */
@@ -1183,6 +1206,7 @@ export class PortfolioStory {
     this.disposed = true;
     this.finishReveal();
     if (this._typing) { clearInterval(this._typing.timer); this._typing = null; }
+    clearTimeout(this._wheelDecay);
     this._tcTimers.forEach(clearTimeout);
     this.renderer.setAnimationLoop(null);
     window.removeEventListener('keydown', this._onKeyDown);

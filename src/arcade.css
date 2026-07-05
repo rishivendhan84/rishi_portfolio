@@ -481,3 +481,16 @@
   .gpanel__head { flex-direction: column; gap: 0.3rem; }
   .arcade__end-links { flex-direction: column; gap: 0.55rem; }
 }
+
+/* native scrolling inside the checkpoint panel (kept out of Lenis's hands) */
+.gpanel {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(110, 231, 255, 0.35) transparent;
+}
+.gpanel::-webkit-scrollbar { width: 6px; }
+.gpanel::-webkit-scrollbar-thumb {
+  background: rgba(110, 231, 255, 0.3);
+  border-radius: 3px;
+}

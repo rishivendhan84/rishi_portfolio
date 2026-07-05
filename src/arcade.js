@@ -368,7 +368,7 @@ export class PortfolioArcade {
       </div>
 
       <div class="arcade__panel" hidden>
-        <div class="gpanel"></div>
+        <div class="gpanel" data-lenis-prevent></div>
       </div>
 
       <div class="arcade__screen arcade__screen--intro">
