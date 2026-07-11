@@ -719,7 +719,22 @@ main {
 }
 @media (max-width: 600px) {
   .hero__scroll { display: none; }
-  .hero__actions .btn { flex: 1; justify-content: center; }
+  .hero__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    width: 100%;
+  }
+  .hero__actions .btn {
+    justify-content: center;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-size: 0.82rem;
+    text-align: center;
+  }
+}
+@media (max-width: 380px) {
+  .hero__actions { grid-template-columns: 1fr; }
 }
 
 /* ---------- Metrics marquee ---------- */
