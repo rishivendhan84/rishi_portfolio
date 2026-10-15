@@ -14,5 +14,11 @@
         }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "api/chat.js": {
+      "includeFiles": "data/index.json",
+      "maxDuration": 30
+    }
+  }
 }

@@ -19,9 +19,9 @@ Files starting with `_` are skipped by ingest. Ingest will also refuse any file 
 7. AI Medical Report Scanner: kept on Rishi's word (he can show it in an interview).
 8. github-resources: described as paused since August 30, 2026.
 
-## Still open (search for `[CONFIRM`)
+## Bot explainer (2026-10-15)
 
-- `about-this-bot.md` (split out of faq.md so contact answers are not blocked): rewrite "How does this chatbot work?" once phase 3 is built, with the eval numbers. Ingest stays blocked on this file until then, by design.
+- `about-this-bot.md` rewritten after phase 3 to describe what was actually built and the measured eval results; its marker is resolved, so the index is complete. Rishi to read it once, since the bot will quote it to recruiters.
 
 ## Deliberately left out
 
