@@ -1,16 +1,16 @@
 # Retrieval eval
 
-- Run: 2026-10-15T11:15:34.810Z
+- Run: 2026-10-15T11:42:05.487Z
 - Mode: **bm25** (keyword baseline, no embeddings)
-- Index: 54 chunks, built 2026-10-15T11:14:17.821Z, DRAFT (skipped about-this-bot.md)
+- Index: 54 chunks, built 2026-10-15T11:40:24.358Z, DRAFT (skipped about-this-bot.md)
 - Config: top 5, 20 candidates per retriever, RRF k=60, gate minBm25=4
 
-| Metric | Result | Target |
-|---|---|---|
-| hit@5 (answerable + declined, n=25) | 92% (23/25) | 90% |
-| MRR | 0.758 | |
-| Relevance gate correct (n=30) | 83% (25/30) | 100% |
-| Adversarial (answer-level) | 5 rows, run in phase 3 | |
+| Set | hit@5 | MRR | Relevance gate correct |
+|---|---|---|---|
+| Tuned on | 86% (24/28) | 0.713 | 73% (22/30) |
+| Held out (written after tuning) * | 100% (2/2) | 1.000 | 67% (4/6) |
+
+Targets: hit@5 90%, gate 100%. Adversarial rows (5) test answers, not retrieval, and run in phase 3.
 
 | id | type | question | rank | gate | top BM25 | top cosine | top chunk | |
 |---|---|---|---|---|---|---|---|---|
@@ -39,8 +39,14 @@
 | a23 | answerable | What time zone is he in? | 1 | pass | 7.24 | - | faq#location-and-time-zone | ok |
 | d01 | declined | What salary does he expect? | 1 | pass | 4.44 | - | faq#questions-the-assistant-cannot-answer | ok |
 | d02 | declined | What is his notice period? | 1 | pass | 8.88 | - | faq#questions-the-assistant-cannot-answer | ok |
-| u01 | unanswerable | Has he worked with Kubernetes? | - | stop | 3.89 | - | skills#genai-and-ai-engineering | ok |
-| u02 | unanswerable | Can he write Rust or Go? | - | stop | 3.60 | - | projects/happy-wedding-marketplace#what-it-is | ok |
+| u01 | absent | Has he worked with Kubernetes? | 1 | stop | 3.89 | - | skills#genai-and-ai-engineering | MISS |
+| u02 | absent | Can he write Rust or Go? | - | stop | 3.60 | - | projects/happy-wedding-marketplace#what-it-is | MISS |
 | u03 | unanswerable | What is his favorite movie? | - | stop | 0.00 | - | - | ok |
-| u04 | unanswerable | Has he used Django or Laravel? | - | stop | 3.11 | - | projects/microsaas-template#what-it-is | ok |
+| u04 | absent | Has he used Django or Laravel? | - | stop | 3.11 | - | projects/microsaas-template#what-it-is | MISS |
 | u05 | unanswerable | What's the weather like in Mumbai? | - | stop | 0.00 | - | - | ok |
+| h01* | unanswerable | Who won the last cricket world cup? | - | stop | 0.00 | - | - | ok |
+| h02* | unanswerable | What is the capital of France? | - | stop | 0.00 | - | - | ok |
+| h03* | unanswerable | Can you recommend a good laptop under 50000 rupees? | - | stop | 3.34 | - | experience#monad-saudi-b2b-wholesale-platform-minsway | ok |
+| h04* | unanswerable | Write me a SQL query that joins two tables. | - | pass | 4.31 | - | skills#working-knowledge | MISS |
+| h05* | answerable | Has he built anything with Socket.IO? | 1 | pass | 6.83 | - | projects/fun-friday-arena#stack | ok |
+| h06* | answerable | Which projects use Stripe for payments? | 1 | stop | 3.39 | - | projects/vitalens#stack | MISS |
