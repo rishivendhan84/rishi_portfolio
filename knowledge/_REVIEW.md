@@ -21,7 +21,7 @@ Files starting with `_` are skipped by ingest. Ingest will also refuse any file 
 
 ## Still open (search for `[CONFIRM`)
 
-- `faq.md`: rewrite "How does this chatbot work?" once phase 3 is built, with the eval numbers. Ingest stays blocked on this file until then, by design.
+- `about-this-bot.md` (split out of faq.md so contact answers are not blocked): rewrite "How does this chatbot work?" once phase 3 is built, with the eval numbers. Ingest stays blocked on this file until then, by design.
 
 ## Deliberately left out
 

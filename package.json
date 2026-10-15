@@ -7,7 +7,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "ingest": "node --env-file-if-exists=.env.local scripts/ingest.mjs",
+    "eval": "node --env-file-if-exists=.env.local eval/run-eval.mjs",
+    "test": "node --test \"test/*.test.js\""
   },
   "dependencies": {
     "gsap": "^3.12.7",
