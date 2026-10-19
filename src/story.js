@@ -27,7 +27,7 @@ const CHAPTERS = [
 /* Chapter IV lets the reader choose the order they meet the AI systems. */
 const AGENT_BEATS = {
   rag: {
-    text: 'The <b>production RAG chatbot</b> — deployed as a live widget, grounded in complex internal data with vector search and LangChain. It answers <b>30–150 real user questions a day</b>. Don’t take the story’s word for it — interview it.',
+    text: 'The <b>production RAG chatbot</b> — deployed as a live widget, grounded in complex internal data with vector search and LangChain. It gives users <b>self-serve answers</b> to repetitive support questions. Don’t take the story’s word for it — interview it.',
     widget: 'chat',
     tags: ['RAG', 'Vector DBs', 'LangChain', 'Python'],
   },
@@ -73,8 +73,8 @@ function buildScript() {
     },
     {
       ch: 2,
-      text: 'Today, <b>30 people</b> run their day inside it. Every work order carries a live timeline from raw material to dispatch. The paper is gone.',
-      stats: [['9,000+', 'work orders'], ['4,500+', 'SKUs'], ['8', 'modules · RBAC'], ['30', 'daily users']],
+      text: 'Built with the stakeholders who run production, through phase-one acceptance testing. Every work order carries a live timeline from raw material to dispatch. The paper is gone.',
+      stats: [['9,000+', 'work orders'], ['4,500+', 'SKUs'], ['8', 'modules · RBAC'], ['16', 'BORs']],
       tags: ['React', 'Node.js', 'Express', 'PostgreSQL'],
     },
 
@@ -277,7 +277,7 @@ const WIDGETS = {
   chat(root, game) {
     const QA = [
       ['What exactly do you do?', 'I answer questions over complex internal data — grounded with vector search and LangChain, so I cite what’s true instead of guessing. RAG, not vibes.'],
-      ['How busy are you?', 'Between 30 and 150 real user queries a day, as a live embedded widget. I absorb the repetitive support load so humans get the interesting problems.'],
+      ['Where do you run?', 'As a live embedded widget. I take the repetitive support questions so humans get the interesting problems.'],
       ['Who built you?', 'Rishi did — the vector database, the retrieval pipeline, the prompts, this widget, and the deployment. End to end, like everything else in this story.'],
     ];
     root.innerHTML = `
@@ -349,7 +349,7 @@ const WIDGETS = {
       <div class="w-seo">
         <div class="w-seo__term"></div>
         <button type="button" class="w-btn">Generate the weekly report</button>
-        <div class="w-seo__stat" hidden><b>15 hrs</b><span>→</span><b>30 min</b><em>of weekly reporting</em></div>
+        <div class="w-seo__stat" hidden><b>GSC</b><span>+</span><b>GA4</b><em>into one weekly report</em></div>
       </div>`;
     const btn = root.querySelector('.w-btn');
     const term = root.querySelector('.w-seo__term');

@@ -274,6 +274,34 @@ document.querySelectorAll('[data-game-launch]').forEach((btn) => {
   btn.addEventListener('click', () => launchMode('game'));
 });
 
+/* ---------- Portfolio assistant (lazy-loaded on first open) ---------- */
+const chatLaunch = document.getElementById('chat-launch');
+let chat = null;
+const loadChat = () => import('./chat.js');
+if (chatLaunch) {
+  // Warm the chunk when the pointer or focus reaches the launcher.
+  ['pointerenter', 'focus'].forEach((ev) => chatLaunch.addEventListener(ev, loadChat, { once: true }));
+  chatLaunch.addEventListener('click', async () => {
+    if (!chat) {
+      chatLaunch.classList.add('is-loading');
+      try {
+        const { createChat } = await loadChat();
+        chat = createChat({
+          launcher: chatLaunch,
+          onOpen: () => lenis.stop(),
+          onClose: () => lenis.start(),
+        });
+      } catch (err) {
+        console.error('Chat failed to load.', err);
+        return;
+      } finally {
+        chatLaunch.classList.remove('is-loading');
+      }
+    }
+    chat.show();
+  });
+}
+
 /* ---------- Year ---------- */
 document.getElementById('year').textContent = new Date().getFullYear();
 

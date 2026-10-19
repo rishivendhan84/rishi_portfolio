@@ -437,6 +437,57 @@ body.is-game {
   overflow: hidden;
 }
 
+/* ---------- Portfolio assistant launcher (panel styles: src/chat.css) ---------- */
+.chat-launch {
+  position: fixed;
+  right: clamp(1rem, 2.5vw, 2rem);
+  bottom: clamp(1rem, 2.5vw, 2rem);
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.75rem 1.15rem;
+  font: 500 0.85rem/1 var(--font-body);
+  color: var(--ink);
+  background: rgba(11, 11, 18, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(110, 231, 255, 0.35);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s, border-color 0.3s;
+}
+.chat-launch:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 0 26px rgba(110, 231, 255, 0.25);
+}
+.chat-launch__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+.chat-launch.is-loading {
+  opacity: 0.6;
+}
+body.is-game .chat-launch,
+body.is-chat .chat-launch {
+  display: none;
+}
+@media (max-width: 640px) {
+  .chat-launch__label::before {
+    content: 'Ask';
+  }
+  .chat-launch__label {
+    font-size: 0;
+  }
+  .chat-launch__label::before {
+    font-size: 0.85rem;
+  }
+}
+
 /* ---------- Mobile menu ---------- */
 .mobile-menu {
   position: fixed;

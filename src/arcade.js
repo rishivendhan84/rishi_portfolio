@@ -34,7 +34,7 @@ const CHECKPOINTS = [
       'Architected and shipped an 8-module platform that digitized a fully manual, handwritten process — managing 9,000+ work orders, 4,500+ SKUs, 16 BORs and 8 stations, with a real-time timeline tracking every work order’s full lifecycle. Owned design through deployment with company leadership.',
     stats: [
       ['9,000+', 'work orders'],
-      ['30', 'daily users'],
+      ['4,500+', 'SKUs'],
       ['8', 'modules · RBAC'],
     ],
     tags: ['React', 'Node.js', 'Express', 'PostgreSQL'],
@@ -61,9 +61,9 @@ const CHECKPOINTS = [
     title: 'Production RAG Chatbot',
     meta: 'Deployed · Live',
     desc:
-      'A deployed RAG chatbot over complex internal data using vector databases and LangChain, embedded as a live widget. Fields 30–150 user queries a day with accurate self-serve answers, cutting repetitive support load.',
+      'A deployed RAG chatbot over complex internal data using vector databases and LangChain, embedded as a live widget. It gives users accurate self-serve answers to repetitive support questions.',
     stats: [
-      ['30–150', 'queries / day'],
+      ['Vector', 'retrieval'],
       ['Live', 'widget'],
       ['RAG', 'grounded'],
     ],
@@ -77,9 +77,9 @@ const CHECKPOINTS = [
     title: 'SEO Analytics Agent',
     meta: 'Automation · Python',
     desc:
-      'A custom agent that ingests Google Search Console and GA4 data and auto-delivers scheduled weekly SEO, AEO and GEO reports — reducing manual reporting from 15 hours a week to under 30 minutes.',
+      'A custom agent that ingests Google Search Console and GA4 data and auto-delivers scheduled weekly SEO, AEO and GEO reports.',
     stats: [
-      ['15 hrs → 30 min', 'weekly reporting'],
+      ['SEO · AEO · GEO', 'signals'],
       ['GSC + GA4', 'data sources'],
       ['Weekly', 'auto-reports'],
     ],
@@ -92,9 +92,9 @@ const CHECKPOINTS = [
     title: 'Email-Marketing Analytics',
     meta: 'CX Analytix · B2B',
     desc:
-      'A B2B analytics product that surfaces campaign KPIs through live dashboards, giving clients real-time visibility into performance and cutting manual reporting by ~10 hours a week.',
+      'A B2B analytics product that surfaces campaign KPIs through live dashboards, giving clients real-time visibility into performance.',
     stats: [
-      ['~10 hrs/wk', 'saved'],
+      ['B2B', 'analytics'],
       ['Live', 'dashboards'],
       ['Real-time', 'KPIs'],
     ],

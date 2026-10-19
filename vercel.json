@@ -14,5 +14,14 @@
         }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "api/chat.js": {
+      "includeFiles": "data/index.json",
+      "maxDuration": 30
+    },
+    "api/health.js": {
+      "includeFiles": "data/index.json"
+    }
+  }
 }

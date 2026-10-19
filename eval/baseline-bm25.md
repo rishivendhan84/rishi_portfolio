@@ -1,0 +1,54 @@
+# Retrieval eval
+
+- Run: 2026-10-19T13:57:03.609Z
+- Mode: **bm25** (keyword baseline, no embeddings)
+- Index: 58 chunks, built 2026-10-15T11:55:29.366Z
+- Config: top 5, 20 candidates per retriever, RRF k=60, gate minBm25=4
+
+| Set | hit@5 | MRR | Relevance gate correct |
+|---|---|---|---|
+| Tuned on | 83% (25/30) | 0.698 | 78% (25/32) |
+| Held out (written after tuning) * | 100% (2/2) | 1.000 | 67% (4/6) |
+
+Targets: hit@5 90%, gate 100%. Adversarial rows (6) test answers, not retrieval, and run in phase 3.
+
+| id | type | question | rank | gate | top BM25 | top cosine | top chunk | |
+|---|---|---|---|---|---|---|---|---|
+| a01 | answerable | Has he shipped a RAG system in production? | 2 | pass | 7.56 | - | experience#minsway-solutions-pvt-ltd-software-engineer-december-2021-to-may-2025-chennai | ok |
+| a02 | answerable | What did he build with LangGraph? | 3 | stop | 3.29 | - | projects/zoft-ai-workflow-copilot#stack | MISS |
+| a03 | answerable | How many years of experience does he have? | 1 | pass | 4.06 | - | profile#summary | ok |
+| a04 | answerable | Where does he work right now? | - | stop | 3.40 | - | profile#how-he-works | MISS |
+| a05 | answerable | What was the production planning system and what stack did it use? | 1 | pass | 9.73 | - | experience#production-planning-system-different-hair | ok |
+| a06 | answerable | How did he make the Monad APIs faster? | 1 | pass | 8.83 | - | experience#monad-saudi-b2b-wholesale-platform-minsway | ok |
+| a07 | answerable | Tell me about the single sign-on platform with multiple tenants | 1 | pass | 14.56 | - | experience#multi-tenant-sso-platform-minsway | ok |
+| a08 | answerable | Which vector databases has he used? | 1 | pass | 5.91 | - | skills#databases | ok |
+| a09 | answerable | How does VitaLens get accurate macros from a food photo? | 1 | pass | 11.05 | - | projects/vitalens#architecture | ok |
+| a10 | answerable | How does the workflow copilot stop the LLM from corrupting saved workflows? | 4 | pass | 5.82 | - | projects/zoft-ai-workflow-copilot#what-it-is | ok |
+| a11 | answerable | How was the Zoft take-home tested? | 3 | pass | 10.10 | - | projects/zoft-ai-workflow-copilot#what-it-is | ok |
+| a12 | answerable | How does the multiplayer UNO and chess work in Fun Friday? | 3 | pass | 13.91 | - | projects/fun-friday-arena#what-it-is | ok |
+| a13 | answerable | What is PAIOS and what works on it today? | 1 | pass | 8.69 | - | projects/paios#what-works-today | ok |
+| a14 | answerable | Which agent automates SEO reporting from Search Console? | 1 | pass | 16.04 | - | experience#seo-analytics-agent | ok |
+| a15 | answerable | How was this portfolio website built? | 1 | pass | 6.07 | - | projects/rishi-portfolio#what-it-is | ok |
+| a16 | answerable | What is his educational background? | - | stop | 2.08 | - | projects/zoft-ai-workflow-copilot#architecture | MISS |
+| a17 | answerable | Which certifications does he hold? | 1 | pass | 4.88 | - | profile#certifications | ok |
+| a18 | answerable | How can I contact him? | 1 | pass | 7.50 | - | faq#how-to-contact-rishi | ok |
+| a19 | answerable | Is he looking for a new job? | - | pass | 4.22 | - | projects/zoft-ai-workflow-copilot#the-core-idea | MISS |
+| a20 | answerable | What is the wedding marketplace project? | 1 | pass | 7.85 | - | projects/happy-wedding-marketplace#what-it-is | ok |
+| a21 | answerable | Does he know MCP? | 1 | pass | 4.02 | - | skills#genai-and-ai-engineering | ok |
+| a22 | answerable | What is the github-resources repo and is it still updated daily? | 1 | pass | 11.64 | - | projects/github-resources#status | ok |
+| a23 | answerable | What time zone is he in? | 1 | pass | 7.32 | - | faq#location-and-time-zone | ok |
+| d01 | declined | What salary does he expect? | 1 | stop | 3.94 | - | faq#questions-the-assistant-cannot-answer | MISS |
+| d02 | declined | What is his notice period? | 1 | pass | 7.87 | - | faq#questions-the-assistant-cannot-answer | ok |
+| u01 | absent | Has he worked with Kubernetes? | 1 | pass | 4.02 | - | skills#genai-and-ai-engineering | ok |
+| u02 | absent | Can he write Rust or Go? | - | stop | 3.21 | - | projects/happy-wedding-marketplace#what-it-is | MISS |
+| u03 | unanswerable | What is his favorite movie? | - | stop | 0.00 | - | - | ok |
+| u04 | absent | Has he used Django or Laravel? | - | stop | 2.78 | - | projects/microsaas-template#what-it-is | MISS |
+| u05 | unanswerable | What's the weather like in Mumbai? | - | stop | 0.00 | - | - | ok |
+| h01* | unanswerable | Who won the last cricket world cup? | - | stop | 0.00 | - | - | ok |
+| h02* | unanswerable | What is the capital of France? | - | stop | 0.00 | - | - | ok |
+| h03* | unanswerable | Can you recommend a good laptop under 50000 rupees? | - | stop | 3.09 | - | experience#monad-saudi-b2b-wholesale-platform-minsway | ok |
+| h04* | unanswerable | Write me a SQL query that joins two tables. | - | pass | 4.44 | - | skills#working-knowledge | MISS |
+| h05* | answerable | Has he built anything with Socket.IO? | 1 | pass | 7.07 | - | projects/fun-friday-arena#stack | ok |
+| h06* | answerable | Which projects use Stripe for payments? | 1 | stop | 3.51 | - | projects/vitalens#stack | MISS |
+| a24 | answerable | How does this chatbot work? | 1 | pass | 4.75 | - | about-this-bot#how-does-this-chatbot-work | ok |
+| a25 | answerable | How is this bot evaluated? | 5 | stop | 3.31 | - | projects/zoft-ai-workflow-copilot#what-it-is | MISS |
