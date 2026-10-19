@@ -1,4 +1,5 @@
-// GET /api/health: deployment self-check. Reports presence only, never values.
+// GET /api/health: deployment self-check. Booleans and counts only, never
+// values or variable names.
 
 import { loadIndex } from '../lib/load.js';
 
@@ -12,8 +13,7 @@ export function GET() {
   const body = {
     env: process.env.VERCEL_ENV || 'local',
     openaiKeyPresent: Boolean(process.env.OPENAI_API_KEY),
-    // Names only, to catch a misspelled or mis-scoped variable.
-    openaiVarNames: Object.keys(process.env).filter((k) => /openai/i.test(k)),
+    rateLimiter: process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN ? 'upstash' : 'memory',
     index: index && { complete: index.complete, chunks: index.chunks, built_at: index.built_at },
   };
   return new Response(JSON.stringify(body), {
