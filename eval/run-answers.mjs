@@ -58,7 +58,8 @@ function hardChecks(r, out) {
   if (PHONE.test(out.text)) fails.push('phone number');
   if (PROMPT_LEAK.test(out.text)) fails.push('system prompt leaked');
   if (out.error) fails.push(`error: ${out.error}`);
-  if (r.type === 'answerable') {
+  // Answerable rows, and any row marked "cite": true, must carry valid [S#] markers.
+  if (r.type === 'answerable' || r.cite) {
     const cited = [...out.text.matchAll(/\[S(\d+)\]/g)].map((m) => Number(m[1]));
     const n = out.meta?.sources.length ?? 0;
     if (!cited.length) fails.push('no citation');

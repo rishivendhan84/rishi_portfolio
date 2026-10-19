@@ -1,6 +1,6 @@
 # Retrieval eval
 
-- Run: 2026-10-15T11:55:40.856Z
+- Run: 2026-10-19T13:57:21.487Z
 - Mode: **hybrid**
 - Index: 58 chunks, built 2026-10-15T11:55:29.366Z
 - Config: top 5, 20 candidates per retriever, RRF k=60, gate strongCosine=0.4, minCosine=0.3 with BM25>=1, bm25Override=8
